@@ -85,10 +85,10 @@ if ( ! function_exists( 'fastshop_cart_link_fragment' ) ) {
 function fastshop_woocommerce_scripts() {
 	global $fastshop_version;
 
-	wp_enqueue_style( 'fastshop-woocommerce-style', get_template_directory_uri() . '/inc/woocommerce/css/woocommerce.css', $fastshop_version );
+	wp_enqueue_style( 'fastshop-woocommerce-style', FS_URL . '/inc/woocommerce/css/woocommerce.css', $fastshop_version );
 	wp_style_add_data( 'fastshop-woocommerce-style', 'rtl', 'replace' );
 
-	wp_register_script( 'fastshop-sticky-payment', get_template_directory_uri() . '/js/checkout.min.js', 'jquery', $fastshop_version, true );
+	wp_register_script( 'fastshop-sticky-payment', FS_URL . '/js/checkout.min.js', 'jquery', $fastshop_version, true );
 
 	if ( is_checkout() ) {
 		wp_enqueue_script( 'fastshop-sticky-payment' );

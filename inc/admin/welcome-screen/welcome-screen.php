@@ -56,7 +56,7 @@ class Fastshop_Welcome {
 		global $fastshop_version;
 
 		if ( 'appearance_page_fastshop-welcome' == $hook_suffix ) {
-			wp_enqueue_style( 'fastshop-welcome-screen', get_template_directory_uri() . '/inc/admin/welcome-screen/css/welcome.css', $fastshop_version );
+			wp_enqueue_style( 'fastshop-welcome-screen', FS_URL . '/inc/admin/welcome-screen/css/welcome.css', $fastshop_version );
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_script( 'thickbox' );
 		}

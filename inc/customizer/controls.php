@@ -335,8 +335,8 @@ if ( ! function_exists( 'fastshop_customize_register' ) ) {
 					'label'			=> __( 'General Layout', 'fastshop' ),
 					'priority'		=> 1,
 					'choices'		=> array(
-						'right' 		=> get_template_directory_uri() . '/inc/customizer/controls/img/2cr.png',
-						'left' 			=> get_template_directory_uri() . '/inc/customizer/controls/img/2cl.png',
+						'right' 		=> FS_URL . '/inc/customizer/controls/img/2cr.png',
+						'left' 			=> FS_URL . '/inc/customizer/controls/img/2cl.png',
 					)
 		) ) );
 

@@ -12,7 +12,7 @@
  */
 if ( ! function_exists( 'fastshop_customize_preview_js' ) ) {
 	function fastshop_customize_preview_js() {
-		wp_enqueue_script( 'fastshop_customizer', get_template_directory_uri() . '/inc/customizer/js/customizer.min.js', array( 'customize-preview' ), '1.15', true );
+		wp_enqueue_script( 'fastshop_customizer', FS_URL . '/inc/customizer/js/customizer.min.js', array( 'customize-preview' ), '1.15', true );
 	}
 }
 

@@ -12,6 +12,12 @@
 require get_template_directory() . '/inc/functions/setup.php';
 
 /**
+ * API endpoints
+ * Enqueue styles, register widget regions, etc.
+ */
+require get_template_directory() . '/inc/functions/wp-api.php';
+
+/**
  * Structure.
  * Template functions used throughout the theme.
  */

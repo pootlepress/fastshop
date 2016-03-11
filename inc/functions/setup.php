@@ -135,7 +135,6 @@ function fastshop_widgets_init() {
 		);
 	}
 }
-
 /**
  * Enqueue scripts and styles.
  * @since  1.0.0
@@ -143,21 +142,65 @@ function fastshop_widgets_init() {
 function fastshop_scripts() {
 	global $fastshop_version;
 
-	wp_enqueue_style( 'fastshop-style', get_template_directory_uri() . '/style.css', '', $fastshop_version );
+	wp_enqueue_style( 'fastshop-style', FS_URL . '/style.css', '', $fastshop_version );
 
 	wp_style_add_data( 'fastshop-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'fastshop-angular', '//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js', '1.5', true );
+	wp_enqueue_script( 'fastshop-es6-shim', '//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js' );
+	wp_enqueue_script( 'fastshop-system-polyfills', '//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js' );
+	wp_enqueue_script( 'fastshop-ie-shims', '//npmcdn.com/angular2@2.0.0-beta.9/es6/dev/src/testing/shims_for_IE.js' );
 
-	wp_enqueue_script( 'fastshop-ng-app', get_template_directory_uri() . '/js/ng-app.js', array( 'fastshop-angular' ), '1.0.0', true );
+	wp_enqueue_script( 'fastshop-angular-polyfills', '//code.angularjs.org/2.0.0-beta.9/angular2-polyfills.js' );
+	wp_enqueue_script( 'fastshop-angular-system', '//code.angularjs.org/tools/system.js' );
+	wp_enqueue_script( 'fastshop-typescript', '//npmcdn.com/typescript@1.8.2/lib/typescript.js' );
+	wp_enqueue_script( 'fastshop-angular-Rx', '//code.angularjs.org/2.0.0-beta.9/Rx.js' );
+	wp_enqueue_script( 'fastshop-angular', '//code.angularjs.org/2.0.0-beta.9/angular2.dev.js' );
+	wp_enqueue_script( 'fastshop-angular-router', '//code.angularjs.org/2.0.0-beta.9/router.min.js' );
+	wp_enqueue_script( 'fastshop-angular-http', '//code.angularjs.org/2.0.0-beta.9/http.min.js' );
 
-	wp_enqueue_script( 'fastshop-navigation', get_template_directory_uri() . '/js/navigation.min.js', array( 'jquery' ), '20120206', true );
+	                                                                    wp_enqueue_script( 'fastshop-navigation', FS_URL . '/js/navigation.min.js', array( 'jquery' ), '20120206', true );
 
-	wp_enqueue_script( 'fastshop-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.min.js', array(), '20130115', true );
+	wp_enqueue_script( 'fastshop-skip-link-focus-fix', FS_URL . '/js/skip-link-focus-fix.min.js', array(), '20130115', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+	?>
+	<base href="<?php echo site_url() ?>">
+	<?php
+}
+
+
+/**
+ * Enqueue scripts and styles.
+ * @since  1.0.0
+ */
+function fastshop_system_init() {
+	$site_url = site_url();
+	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
+	$shop_slug = str_replace( $site_url, '', $shop_page_url );
+	?>
+	<script>
+		fsl10n = {
+			url			: '<?php echo FS_URL ?>',
+			site_url			: '<?php echo $site_url ?>',
+			routes	: {
+				product		: '<?php echo get_option( 'product_permalink_structure', '/product' ) ?>',
+				productCat	: '<?php echo get_option( 'woocommerce_product_category_slug', '/product-category' ) ?>',
+				productTag	: '<?php echo get_option( 'woocommerce_product_tag_slug', '/product-tag' ) ?>',
+				shop		: '<?php echo $shop_slug ?>'
+			},
+			wcStyle		: '<?php echo WC()->plugin_url() . '/assets/css/woocommerce.css' ?>',
+		};
+		System.config({
+			transpiler: 'typescript',
+			typescriptOptions: { emitDecoratorMetadata: true },
+			packages: {'app': {defaultExtension: 'ts'}}
+		});
+		System.import('<?php echo FS_URL ?>/ng/app.ts')
+			.then(null, console.error.bind(console));
+	</script>
+	<?php
 }
 
 /**

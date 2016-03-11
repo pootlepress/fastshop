@@ -5,6 +5,8 @@
  * @package fastshop
  */
 
+define( 'FS_URL', get_template_directory_uri() );
+
 /**
  * Initialize all the things.
  */

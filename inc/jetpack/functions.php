@@ -25,7 +25,7 @@ function fastshop_jetpack_scripts() {
 	global $fastshop_version;
 
 	if ( class_exists( 'Jetpack' ) ) {
-		wp_enqueue_style( 'fastshop-jetpack-style', get_template_directory_uri() . '/inc/jetpack/css/jetpack.css', '', $fastshop_version );
+		wp_enqueue_style( 'fastshop-jetpack-style', FS_URL . '/inc/jetpack/css/jetpack.css', '', $fastshop_version );
 		wp_style_add_data( 'fastshop-jetpack-style', 'rtl', 'replace' );
 	}
 }
