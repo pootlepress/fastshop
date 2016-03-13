@@ -1,0 +1,48 @@
+<div id="product-70" [ngClass]="product.post_classes">
+	<span *ngIf="product.sale" class="onsale">Sale!</span>
+	<div class="images">
+		<a [attr.href]="product.thumbnail"  itemprop="image"
+		   class="woocommerce-main-image zoom" title="" data-rel="prettyPhoto[product-gallery]">
+			<img *ngIf="product.thumbnail" [attr.src]="product.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{product.title}} image"/>
+		</a>
+		<div class="thumbnails columns-4"><a href="http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat.jpg"
+		                                     class="zoom first" title="" data-rel="prettyPhoto[product-gallery]"><img
+			width="180" height="180" src="http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat-180x180.jpg"
+			class="attachment-shop_thumbnail size-shop_thumbnail" alt="Poster_2_flat" title="Poster_2_flat"
+			srcset="http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat-150x150.jpg 150w, http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat-300x300.jpg 300w, http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat-768x768.jpg 768w, http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat-180x180.jpg 180w, http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat-600x600.jpg 600w, http://pro/ng/wp-content/uploads/2013/06/Poster_2_flat.jpg 1000w"
+			sizes="(max-width: 180px) 100vw, 180px"></a></div>
+	</div>
+
+	<div class="summary entry-summary">
+
+		<h1 itemprop="name" class="product_title entry-title">{{product.title}}</h1>
+
+		<div class="woocommerce-product-rating" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
+			<div [innerHTML]="product.rating"></div>
+		</div>
+
+		<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+			<p class="price">
+				<del *ngIf="product.delPrice > product.price" ><span [innerHTML]="product.delPrice" class="amount"></span></del>
+				<ins><span [innerHTML]="product.price" class="amount"></span></ins>
+			</p>
+		</div>
+		<div itemprop="description">
+			#Put description Here!
+		</div>
+
+		<form class="cart" method="post" enctype="multipart/form-data">
+			<div class="quantity">
+				<input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4">
+			</div>
+			<input type="hidden" name="add-to-cart" value="{{product.ID}}70">
+			<button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+		</form>
+
+		<div class="product_meta">
+			<span class="posted_in">
+				Category: # Get categories
+			</span>
+		</div>
+	</div><!-- .summary -->
+</div>

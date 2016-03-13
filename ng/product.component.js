@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
+    var core_1, router_1, wpapi_service_ts_1;
     var ProductComponent;
     return {
         setters:[
@@ -17,22 +17,44 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (wpapi_service_ts_1_1) {
+                wpapi_service_ts_1 = wpapi_service_ts_1_1;
             }],
         execute: function() {
             ProductComponent = (function () {
-                function ProductComponent(_routeParams) {
-                    this.product = _routeParams.params;
+                function ProductComponent(router, routeParams, wpApi) {
+                    this.router = router;
+                    this.routeParams = routeParams;
+                    this.wpApi = wpApi;
+                    this.product = {
+                        post_classes: '',
+                        slug: '',
+                        thumbnail: '',
+                        title: '',
+                        rating: '',
+                        sale: '',
+                        delPrice: '',
+                        price: '',
+                        ID: 0
+                    };
                 }
                 ProductComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.product = this.routeParams.params;
+                    this.wpApi.api('product?name=' + this.routeParams.params.slug)
+                        .success(function (res) { return _this.product = JSON.parse(res); });
+                    jQuery('body')
+                        .addClass('single-product single')
+                        .removeClass('archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag');
                 };
                 ProductComponent = __decorate([
                     core_1.Component({
                         selector: 'fs-product',
-                        template: "\n\t<div  style=\"text-align: center\">\n\t\t<h1>{{product.title}}</h1>\n\t\t<center><img [attr.src]=\"product.thumbnail\" class=\"attachment-shop_catalog size-shop_catalog wp-post-image\" alt=\"{{product.title}} image\"/></center>\n\t\t<h3>\n\t\t\t<del><span class=\"amount\">{{ product.delPrice }}</span></del>\n\t\t\t<ins><span class=\"amount\">{{ product.price }}</span></ins>\n\t\t</h3>\n\t</div>\n\t",
-                        //templateUrl: fsl10n.url + '/ng/tpl/product.html',
+                        templateUrl: fsl10n.url + '/ng/tpl/product.html',
                         inputs: ['hero']
                     }), 
-                    __metadata('design:paramtypes', [router_1.RouteParams])
+                    __metadata('design:paramtypes', [router_1.Router, router_1.RouteParams, wpapi_service_ts_1.WPAPI_Service])
                 ], ProductComponent);
                 return ProductComponent;
             })();

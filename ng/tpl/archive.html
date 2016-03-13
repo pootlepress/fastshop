@@ -1,16 +1,16 @@
 <ul class="products">
-	<li *ngFor="p in products" [class]="p.post_classes">
-		<a [href]="p.permalink">
-			<img *ngIf="p.thumbnail" [src]="p.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{p.title}} image">
+	<li *ngFor="#p of products; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
+		<a *ngIf="p.title" style="cursor: pointer;" (click)="openProduct(p)">
+			<img *ngIf="p.thumbnail" [attr.src]="p.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{p.title}} image"/>
 			<h3>{{p.title}}</h3>
-			{{p.rating}}
-			{{p.sale}}
-			<span class="price">
-				<del *ngIf="p.delPrice"><span class="amount">{{p.delPrice}}</span></del>
-				<ins><span class="amount">{{p.price}}</span></ins>
-			</span>
+			<div [innerHTML]="p.rating"></div>
+			<div [innerHTML]="p.sale"></div>
+				<span class="price">
+					<del *ngIf="p.delPrice > p.price" ><span [innerHTML]="p.delPrice" class="amount"></span></del>
+					<ins><span [innerHTML]="p.price" class="amount"></span></ins>
+				</span>
 		</a>
-		<a rel="nofollow" href="/ng/shop/?add-to-cart={{p.ID}}" data-quantity="1" [data-product_id]="p.ID" data-product_sku=""
-		       class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>
+		<a *ngIf="p.title" rel="nofollow" href="/ng/shop/?add-to-cart={{p.ID}}" data-quantity="1" [attr.dataProduct_id]="p.ID" data-product_sku=""
+		   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>
 	</li>
 </ul>
