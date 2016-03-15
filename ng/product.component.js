@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts", "./archive.component.ts"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, wpapi_service_ts_1;
+    var core_1, router_1, wpapi_service_ts_1, archive_component_ts_1;
     var ProductComponent;
     return {
         setters:[
@@ -20,6 +20,9 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
             },
             function (wpapi_service_ts_1_1) {
                 wpapi_service_ts_1 = wpapi_service_ts_1_1;
+            },
+            function (archive_component_ts_1_1) {
+                archive_component_ts_1 = archive_component_ts_1_1;
             }],
         execute: function() {
             ProductComponent = (function () {
@@ -30,7 +33,13 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
                     this.product = {
                         post_classes: '',
                         slug: '',
+                        tabs: '',
+                        upsells: '',
+                        cartForm: '',
+                        related: '',
+                        content: '',
                         thumbnail: '',
+                        meta: '',
                         title: '',
                         rating: '',
                         sale: '',
@@ -48,11 +57,16 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
                         .addClass('single-product single')
                         .removeClass('archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag');
                 };
+                ProductComponent.prototype.routerOnDeactivate = function () {
+                    jQuery('body')
+                        .removeClass('single-product single');
+                };
                 ProductComponent = __decorate([
                     core_1.Component({
                         selector: 'fs-product',
                         templateUrl: fsl10n.url + '/ng/tpl/product.html',
-                        inputs: ['hero']
+                        inputs: ['hero'],
+                        directives: [archive_component_ts_1.ArchiveComponent],
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, router_1.RouteParams, wpapi_service_ts_1.WPAPI_Service])
                 ], ProductComponent);

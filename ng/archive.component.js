@@ -9,7 +9,7 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, wpapi_service_ts_1;
-    var ArchiveComponent;
+    var fastshopArchive, ArchiveComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -22,21 +22,28 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
                 wpapi_service_ts_1 = wpapi_service_ts_1_1;
             }],
         execute: function() {
+            fastshopArchive = [{
+                    "post_classes": "product type-product product-placeholder first",
+                    "thumbnail": "",
+                    "title": "",
+                    "rating": "",
+                    "sale": "",
+                    "delPrice": "",
+                    "price": "",
+                    "ID": 0
+                }];
             ArchiveComponent = (function () {
                 function ArchiveComponent(router, routeParams, wpApi) {
                     this.router = router;
                     this.routeParams = routeParams;
                     this.wpApi = wpApi;
-                    this.products = JSON.parse("[" +
-                        "{\"post_classes\":\"product type-product product-placeholder first\",\"thumbnail\":\"\",\"title\":\"\",\"rating\":\"\",\"sale\":\"\",\"delPrice\":\"\",\"price\":\"\",\"ID\":0}" +
-                        "]");
+                    this.products = fastshopArchive;
+                    this.qry_args = '';
                 }
                 ArchiveComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    jQuery('body')
-                        .removeClass('single-product single');
-                    this.wpApi.api('products')
-                        .success(function (res) { return _this.products = JSON.parse(res); });
+                    this.wpApi.api('products?' + this.qry_args)
+                        .success(function (res) { return fastshopArchive = _this.products = JSON.parse(res); });
                 };
                 ArchiveComponent.prototype.openProduct = function (product) {
                     this.router.navigate(['Product', product]);
@@ -50,12 +57,13 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
                         case 1:
                             classes += ' first';
                     }
-                    return i + ' ' + i % 3 + ' yo guys ' + classes;
+                    return i + ' ' + i % 3 + classes;
                 };
                 ArchiveComponent = __decorate([
                     core_1.Component({
                         selector: 'fs-product-archive',
                         templateUrl: fsl10n.url + '/ng/tpl/archive.html',
+                        inputs: ['qry_args']
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, router_1.RouteParams, wpapi_service_ts_1.WPAPI_Service])
                 ], ArchiveComponent);

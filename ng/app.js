@@ -1,3 +1,4 @@
+/// <reference path="../../../../node_modules/angular2/typings/browser.d.ts" />
 System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', './archive.component.ts', './product.component.ts', "./wpapi.service.ts"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -9,7 +10,7 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var browser_1, core_1, router_1, archive_component_ts_1, product_component_ts_1, wpapi_service_ts_1;
-    var AppComponent;
+    var fastshopRoutes, AppComponent;
     return {
         setters:[
             function (browser_1_1) {
@@ -33,10 +34,36 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
         execute: function() {
             //enableProdMode();
             // Add the component meta data
+            fastshopRoutes = [
+                {
+                    path: fsl10n.routes.product + '/:slug',
+                    name: 'Product',
+                    component: product_component_ts_1.ProductComponent,
+                },
+                {
+                    path: fsl10n.routes.productCat + '/:cat',
+                    name: 'Product Category',
+                    component: archive_component_ts_1.ArchiveComponent
+                },
+                {
+                    path: fsl10n.routes.productTag + '/:tag',
+                    name: 'Product Tag',
+                    component: archive_component_ts_1.ArchiveComponent
+                },
+                {
+                    path: fsl10n.routes.shop,
+                    name: 'Shop',
+                    component: archive_component_ts_1.ArchiveComponent,
+                }
+            ];
             AppComponent = (function () {
-                function AppComponent() {
+                function AppComponent(router) {
+                    this.router = router;
                     this.title = 'Welcome to FASTSHOPPE';
                 }
+                AppComponent.prototype.routerOnActivate = function (instruction) {
+                    console.log('Rerounting to ' + instruction);
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'fastshop',
@@ -44,29 +71,8 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [wpapi_service_ts_1.WPAPI_Service, router_1.ROUTER_PROVIDERS]
                     }),
-                    router_1.RouteConfig([
-                        {
-                            path: fsl10n.routes.product,
-                            name: 'Product',
-                            component: product_component_ts_1.ProductComponent,
-                        },
-                        {
-                            path: fsl10n.routes.productCat,
-                            name: 'Product Category',
-                            component: archive_component_ts_1.ArchiveComponent
-                        },
-                        {
-                            path: fsl10n.routes.productTag,
-                            name: 'Product Tag',
-                            component: archive_component_ts_1.ArchiveComponent
-                        },
-                        {
-                            path: fsl10n.routes.shop,
-                            name: 'Shop',
-                            component: archive_component_ts_1.ArchiveComponent,
-                        }
-                    ]), 
-                    __metadata('design:paramtypes', [])
+                    router_1.RouteConfig(fastshopRoutes), 
+                    __metadata('design:paramtypes', [router_1.Router])
                 ], AppComponent);
                 return AppComponent;
             })();

@@ -22,6 +22,7 @@ System.register(['angular2/core'], function(exports_1) {
                 }
                 WPAPI_Service.prototype.construct = function () { };
                 WPAPI_Service.prototype.api = function (endpoint) {
+                    console.log(this.url + endpoint);
                     return jQuery.ajax({
                         url: this.url + endpoint,
                     });

@@ -15,7 +15,7 @@
  */
 add_action( 'after_setup_theme',			'fastshop_setup' );
 add_action( 'widgets_init',					'fastshop_widgets_init' );
-add_action( 'wp_enqueue_scripts',			'fastshop_scripts',				10 );
+add_action( 'wp_enqueue_scripts',			'fastshop_scripts',				250 );
 add_action( 'wp_head',						'fastshop_system_init',			250 );
 add_action( 'wp_enqueue_scripts',			'fastshop_child_scripts',		30 ); // After WooCommerce
 add_action( 'fastshop_before_content',	'fastshop_header_widget_region',	10 );

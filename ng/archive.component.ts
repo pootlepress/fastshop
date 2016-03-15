@@ -3,24 +3,36 @@
  */
 import { Component, OnInit } from 'angular2/core';
 import { Router, RouteParams } from 'angular2/router';
+
 import {WPAPI_Service} from "./wpapi.service.ts";
+
+var fastshopArchive : ArchiveProduct[] = [ {
+	"post_classes":"product type-product product-placeholder first",
+	"thumbnail":"",
+	"title":"",
+	"rating":"",
+	"sale":"",
+	"delPrice":"",
+	"price":"",
+	"ID":0
+} ];
 
 @Component( {
 	selector: 'fs-product-archive',
 	templateUrl: fsl10n.url + '/ng/tpl/archive.html',
-//	styleUrls:  ['app/archive.component.css'],
-//  directives: [HeroDetailComponent]
+	inputs: ['qry_args']
 } )
 
 export class ArchiveComponent implements OnInit {
+	products : ArchiveProduct[] = fastshopArchive;
+	qry_args : string = '';
+
 	constructor( private router : Router, private routeParams : RouteParams, private wpApi : WPAPI_Service ) {
 	}
 
 	ngOnInit() {
-		jQuery( 'body' )
-			.removeClass( 'single-product single' );
-		this.wpApi.api( 'products' )
-			.success( res => this.products = JSON.parse( res ) );
+		this.wpApi.api( 'products?' + this.qry_args )
+			.success( res => fastshopArchive = this.products = JSON.parse( res ) );
 	}
 
 	openProduct( product ) {
@@ -36,14 +48,8 @@ export class ArchiveComponent implements OnInit {
 			case 1:
 				classes += ' first';
 		}
-		return i + ' ' + i % 3 + ' yo guys ' + classes;
+		return i + ' ' + i % 3 + classes;
 	}
-
-	products : ArchiveProduct[] = JSON.parse(
-		"[" +
-		"{\"post_classes\":\"product type-product product-placeholder first\",\"thumbnail\":\"\",\"title\":\"\",\"rating\":\"\",\"sale\":\"\",\"delPrice\":\"\",\"price\":\"\",\"ID\":0}" +
-		"]"
-	);
 }
 
 interface ArchiveProduct {

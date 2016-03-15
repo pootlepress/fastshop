@@ -158,10 +158,9 @@ function fastshop_scripts() {
 	wp_enqueue_script( 'fastshop-ng-router', '//code.angularjs.org/2.0.0-beta.9/router.min.js' );
 	wp_enqueue_script( 'fastshop-ng-http', '//code.angularjs.org/2.0.0-beta.9/http.min.js' );
 	wp_enqueue_script( 'fastshop-ng-web-api', '//npmcdn.com/a2-in-memory-web-api/web-api.js' );
-	//wp_enqueue_script( 'fastshop-ng-app', FS_URL . '/ng/app.js', array(), '20130115', true );
+	//wp_enqueue_script( 'fastshop-ng-app', FS_URL . '/ng/whole-app.js', array(), '20130115', true );
 
-	                                                                    wp_enqueue_script( 'fastshop-navigation', FS_URL . '/js/navigation.min.js', array( 'jquery' ), '20120206', true );
-
+	wp_enqueue_script( 'fastshop-navigation', FS_URL . '/js/navigation.min.js', array( 'jquery' ), '20120206', true );
 	wp_enqueue_script( 'fastshop-skip-link-focus-fix', FS_URL . '/js/skip-link-focus-fix.min.js', array(), '20130115', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -178,31 +177,33 @@ function fastshop_scripts() {
  * @since  1.0.0
  */
 function fastshop_system_init() {
-	$site_url = site_url();
-	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
-	$shop_slug = str_replace( $site_url, '', $shop_page_url );
-	?>
-	<script>
-		fsl10n = {
-			url			: '<?php echo FS_URL ?>',
-			site_url			: '<?php echo $site_url ?>',
-			routes	: {
-				product		: '<?php echo get_option( 'product_permalink_structure', '/product' ) ?>',
-				productCat	: '<?php echo get_option( 'woocommerce_product_category_slug', '/product-category' ) ?>',
-				productTag	: '<?php echo get_option( 'woocommerce_product_tag_slug', '/product-tag' ) ?>',
-				shop		: '<?php echo $shop_slug ?>'
-			},
-			wcStyle		: '<?php echo WC()->plugin_url() . '/assets/css/woocommerce.css' ?>',
-		};
-		System.config({
-			transpiler: 'typescript',
-			typescriptOptions: { emitDecoratorMetadata: true },
-			packages: {'app': {defaultExtension: 'js'}}
-		});
-		System.import('<?php echo FS_URL ?>/ng/app.ts')
-			.then(null, console.error.bind(console));
-	</script>
-	<?php
+	if ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
+		$site_url      = site_url();
+		$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
+		$shop_slug     = str_replace( $site_url, '', $shop_page_url );
+		?>
+		<script>
+			fsl10n = {
+				url : '<?php echo FS_URL ?>',
+				site_url : '<?php echo $site_url ?>',
+				routes : {
+					product : '<?php echo get_option( 'product_permalink_structure', '/product' ) ?>',
+					productCat : '<?php echo get_option( 'woocommerce_product_category_slug', '/product-category' ) ?>',
+					productTag : '<?php echo get_option( 'woocommerce_product_tag_slug', '/product-tag' ) ?>',
+					shop : '<?php echo $shop_slug ?>'
+				},
+				wcStyle : '<?php echo WC()->plugin_url() . '/assets/css/woocommerce.css' ?>',
+			};
+			System.config( {
+				transpiler : 'typescript',
+				typescriptOptions : { emitDecoratorMetadata : true },
+				packages : { 'app' : { defaultExtension : 'js' } }
+			} );
+			System.import( '<?php echo FS_URL ?>/ng/app.ts' )
+				.then( null, console.error.bind( console ) );
+		</script>
+		<?php
+	}
 }
 
 /**

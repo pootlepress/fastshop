@@ -9,6 +9,7 @@ export class WPAPI_Service {
 	url = fsl10n.site_url + '/wp-json/fastshop/v1/';
 
 	api ( endpoint ) {
+		console.log( this.url + endpoint );
 		return jQuery.ajax( {
 			url: this.url + endpoint,
 		} );
