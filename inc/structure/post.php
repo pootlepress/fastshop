@@ -120,19 +120,6 @@ if ( ! function_exists( 'fastshop_paging_nav' ) ) {
 	}
 }
 
-if ( ! function_exists( 'fastshop_post_nav' ) ) {
-	/**
-	 * Display navigation to next/previous post when applicable.
-	 */
-	function fastshop_post_nav() {
-		$args = array(
-			'next_text' => '%title &nbsp;<span class="meta-nav">&rarr;</span>',
-			'prev_text' => '<span class="meta-nav">&larr;</span>&nbsp;%title',
-			);
-		the_post_navigation( $args );
-	}
-}
-
 if ( ! function_exists( 'fastshop_posted_on' ) ) {
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.

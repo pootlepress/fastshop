@@ -8,15 +8,6 @@
  */
 
 /**
- * Check whether the Fast shop Customizer settings ar enabled
- * @return boolean
- * @since  1.1.2
- */
-function is_fastshop_customizer_enabled() {
-	return apply_filters( 'fastshop_customizer_enabled', true );
-}
-
-/**
  * Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link.
  *
  * @param array $args Configuration arguments.

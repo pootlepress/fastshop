@@ -115,18 +115,17 @@ function fastshop_woocommerce_integrations_scripts() {
 if ( ! function_exists( 'fastshop_add_integrations_customizer_css' ) ) {
 	function fastshop_add_integrations_customizer_css() {
 
-		if ( is_fastshop_customizer_enabled() ) {
-			$accent_color 					= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_accent_color', apply_filters( 'fastshop_default_accent_color', '#96588a' ) ) );
-			$header_text_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_text_color', apply_filters( 'fastshop_default_header_text_color', '#9aa0a7' ) ) );
-			$header_background_color 		= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_background_color', apply_filters( 'fastshop_default_header_background_color', '#2c2d33' ) ) );
-			$text_color 					= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_text_color', apply_filters( 'fastshop_default_text_color', '#60646c' ) ) );
-			$button_background_color 		= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_background_color', apply_filters( 'fastshop_default_button_background_color', '#60646c' ) ) );
-			$button_text_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_text_color', apply_filters( 'fastshop_default_button_text_color', '#ffffff' ) ) );
+		$accent_color            = fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_accent_color', apply_filters( 'fastshop_default_accent_color', '#09c' ) ) );
+		$header_text_color       = fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_text_color', apply_filters( 'fastshop_default_header_text_color', '#9aa0a7' ) ) );
+		$header_background_color = fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_background_color', apply_filters( 'fastshop_default_header_background_color', '#2c2d33' ) ) );
+		$text_color              = fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_text_color', apply_filters( 'fastshop_default_text_color', '#60646c' ) ) );
+		$button_background_color = fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_background_color', apply_filters( 'fastshop_default_button_background_color', '#60646c' ) ) );
+		$button_text_color       = fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_text_color', apply_filters( 'fastshop_default_button_text_color', '#ffffff' ) ) );
 
-			$woocommerce_style 				= '';
+		$woocommerce_style = '';
 
-			if ( is_woocommerce_extension_activated( 'WC_Bookings' ) ) {
-				$woocommerce_style 					.= '
+		if ( is_woocommerce_extension_activated( 'WC_Bookings' ) ) {
+			$woocommerce_style .= '
 				#wc-bookings-booking-form .wc-bookings-date-picker .ui-datepicker td.bookable a,
 				#wc-bookings-booking-form .wc-bookings-date-picker .ui-datepicker td.bookable a:hover,
 				#wc-bookings-booking-form .block-picker li a:hover,
@@ -143,10 +142,10 @@ if ( ! function_exists( 'fastshop_add_integrations_customizer_css' ) ) {
 					background-color: ' . $header_background_color . ';
 					color: ' . $header_text_color . ';
 				}';
-			}
+		}
 
-			if ( is_woocommerce_extension_activated( 'WC_Product_Reviews_Pro' ) ) {
-				$woocommerce_style 					.= '
+		if ( is_woocommerce_extension_activated( 'WC_Product_Reviews_Pro' ) ) {
+			$woocommerce_style .= '
 				.woocommerce #reviews .product-rating .product-rating-details table td.rating-graph .bar,
 				.woocommerce-page #reviews .product-rating .product-rating-details table td.rating-graph .bar {
 					background-color: ' . $text_color . ' !important;
@@ -169,10 +168,10 @@ if ( ! function_exists( 'fastshop_add_integrations_customizer_css' ) ) {
 				.woocommerce-page #reviews .form-contribution .attachment-type:not(:checked) label.checkbox:before {
 					color: ' . $accent_color . ' !important;
 				}';
-			}
+		}
 
-			if ( is_woocommerce_extension_activated( 'WC_Smart_Coupons' ) ) {
-				$woocommerce_style 					.= '
+		if ( is_woocommerce_extension_activated( 'WC_Smart_Coupons' ) ) {
+			$woocommerce_style .= '
 				.coupon-container {
 					background-color: ' . $button_background_color . ' !important;
 				}
@@ -186,10 +185,8 @@ if ( ! function_exists( 'fastshop_add_integrations_customizer_css' ) ) {
 				.sd-buttons-transparent.woocommerce-page .coupon-content {
 					border-color: ' . $button_background_color . ' !important;
 				}';
-			}
-
-			wp_add_inline_style( 'fastshop-style', $woocommerce_style );
-
 		}
+
+		wp_add_inline_style( 'fastshop-style', $woocommerce_style );
 	}
 }

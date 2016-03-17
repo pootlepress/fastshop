@@ -30,7 +30,6 @@
 			 * @hooked fastshop_skip_links - 0
 			 * @hooked fastshop_social_icons - 10
 			 * @hooked fastshop_site_branding - 20
-			 * @hooked fastshop_secondary_navigation - 30
 			 * @hooked fastshop_product_search - 40
 			 * @hooked fastshop_primary_navigation - 50
 			 * @hooked fastshop_header_cart - 60

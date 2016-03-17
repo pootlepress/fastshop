@@ -82,7 +82,7 @@ if ( ! function_exists( 'fastshop_customize_register' ) ) {
 		 * Accent Color
 		 */
 		$wp_customize->add_setting( 'fastshop_accent_color', array(
-			'default'           => apply_filters( 'fastshop_default_accent_color', '#96588a' ),
+			'default'           => apply_filters( 'fastshop_default_accent_color', '#09c' ),
 			'sanitize_callback' => 'fastshop_sanitize_hex_color',
 		) );
 
@@ -234,7 +234,7 @@ if ( ! function_exists( 'fastshop_customize_register' ) ) {
 		 * Footer link color
 		 */
 		$wp_customize->add_setting( 'fastshop_footer_link_color', array(
-			'default'           => apply_filters( 'fastshop_default_footer_link_color', '#96588a' ),
+			'default'           => apply_filters( 'fastshop_default_footer_link_color', '#09c' ),
 			'sanitize_callback' => 'fastshop_sanitize_hex_color',
 			'transport'			=> 'postMessage',
 		) );
@@ -290,7 +290,7 @@ if ( ! function_exists( 'fastshop_customize_register' ) ) {
 		 * Button alt background color
 		 */
 		$wp_customize->add_setting( 'fastshop_button_alt_background_color', array(
-			'default'           => apply_filters( 'fastshop_default_button_alt_background_color', '#96588a' ),
+			'default'           => apply_filters( 'fastshop_default_button_alt_background_color', '#09c' ),
 			'sanitize_callback' => 'fastshop_sanitize_hex_color',
 		) );
 

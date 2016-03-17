@@ -12,13 +12,13 @@
  */
 if ( ! function_exists( 'fastshop_add_customizer_css' ) ) {
 	function fastshop_add_customizer_css() {
-		$accent_color 					= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_accent_color', apply_filters( 'fastshop_default_accent_color', '#96588a' ) ) );
+		$accent_color 					= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_accent_color', apply_filters( 'fastshop_default_accent_color', '#09c' ) ) );
 		$header_background_color 		= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_background_color', apply_filters( 'fastshop_default_header_background_color', '#2c2d33' ) ) );
 		$header_link_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_link_color', apply_filters( 'fastshop_default_header_link_color', '#ffffff' ) ) );
 		$header_text_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_header_text_color', apply_filters( 'fastshop_default_header_text_color', '#9aa0a7' ) ) );
 
 		$footer_background_color 		= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_footer_background_color', apply_filters( 'fastshop_default_footer_background_color', '#f3f3f3' ) ) );
-		$footer_link_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_footer_link_color', apply_filters( 'fastshop_default_footer_link_color', '#96588a' ) ) );
+		$footer_link_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_footer_link_color', apply_filters( 'fastshop_default_footer_link_color', '#09c' ) ) );
 		$footer_heading_color 			= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_footer_heading_color', apply_filters( 'fastshop_default_footer_heading_color', '#494c50' ) ) );
 		$footer_text_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_footer_text_color', apply_filters( 'fastshop_default_footer_text_color', '#61656b' ) ) );
 
@@ -26,7 +26,7 @@ if ( ! function_exists( 'fastshop_add_customizer_css' ) ) {
 		$heading_color 					= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_heading_color', apply_filters( 'fastshop_default_heading_color', '#484c51' ) ) );
 		$button_background_color 		= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_background_color', apply_filters( 'fastshop_default_button_background_color', '#60646c' ) ) );
 		$button_text_color 				= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_text_color', apply_filters( 'fastshop_default_button_text_color', '#ffffff' ) ) );
-		$button_alt_background_color 	= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_alt_background_color', apply_filters( 'fastshop_default_button_alt_background_color', '#96588a' ) ) );
+		$button_alt_background_color 	= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_alt_background_color', apply_filters( 'fastshop_default_button_alt_background_color', '#09c' ) ) );
 		$button_alt_text_color 			= fastshop_sanitize_hex_color( get_theme_mod( 'fastshop_button_alt_text_color', apply_filters( 'fastshop_default_button_alt_text_color', '#ffffff' ) ) );
 
 		$brighten_factor 				= apply_filters( 'fastshop_brighten_factor', 25 );

@@ -52,7 +52,6 @@ if ( ! function_exists( 'fastshop_primary_navigation' ) ) {
 	function fastshop_primary_navigation() {
 		?>
 		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_html_e( 'Primary Navigation', 'fastshop' ); ?>">
-		<button class="menu-toggle" aria-controls="primary-navigation" aria-expanded="false"><?php echo esc_attr( apply_filters( 'fastshop_menu_toggle_text', __( 'Navigation', 'fastshop' ) ) ); ?></button>
 			<?php
 			wp_nav_menu(
 				array(
@@ -60,35 +59,6 @@ if ( ! function_exists( 'fastshop_primary_navigation' ) ) {
 					'container_class'	=> 'primary-navigation',
 					)
 			);
-
-			wp_nav_menu(
-				array(
-					'theme_location'	=> 'handheld',
-					'container_class'	=> 'handheld-navigation',
-					)
-			);
-			?>
-		</nav><!-- #site-navigation -->
-		<?php
-	}
-}
-
-if ( ! function_exists( 'fastshop_secondary_navigation' ) ) {
-	/**
-	 * Display Secondary Navigation
-	 * @since  1.0.0
-	 * @return void
-	 */
-	function fastshop_secondary_navigation() {
-		?>
-		<nav class="secondary-navigation" role="navigation" aria-label="<?php _e( 'Secondary Navigation', 'fastshop' ); ?>">
-			<?php
-				wp_nav_menu(
-					array(
-						'theme_location'	=> 'secondary',
-						'fallback_cb'		=> '',
-					)
-				);
 			?>
 		</nav><!-- #site-navigation -->
 		<?php

@@ -24,13 +24,11 @@ add_action( 'fastshop_sidebar',			'fastshop_get_sidebar',				10 );
 /**
  * Header
  * @see  fastshop_skip_links()
- * @see  fastshop_secondary_navigation()
  * @see  fastshop_site_branding()
  * @see  fastshop_primary_navigation()
  */
 add_action( 'fastshop_header', 'fastshop_skip_links', 				0 );
 add_action( 'fastshop_header', 'fastshop_site_branding',			20 );
-add_action( 'fastshop_header', 'fastshop_secondary_navigation',		30 );
 add_action( 'fastshop_header', 'fastshop_primary_navigation',		50 );
 
 /**
@@ -40,22 +38,6 @@ add_action( 'fastshop_header', 'fastshop_primary_navigation',		50 );
  */
 add_action( 'fastshop_footer', 'fastshop_footer_widgets',	10 );
 add_action( 'fastshop_footer', 'fastshop_credit',			20 );
-
-/**
- * Homepage
- * @see  fastshop_homepage_content()
- * @see  fastshop_product_categories()
- * @see  fastshop_recent_products()
- * @see  fastshop_featured_products()
- * @see  fastshop_popular_products()
- * @see  fastshop_on_sale_products()
- */
-add_action( 'homepage', 'fastshop_homepage_content',		10 );
-add_action( 'homepage', 'fastshop_product_categories',	20 );
-add_action( 'homepage', 'fastshop_recent_products',		30 );
-add_action( 'homepage', 'fastshop_featured_products',		40 );
-add_action( 'homepage', 'fastshop_popular_products',		50 );
-add_action( 'homepage', 'fastshop_on_sale_products',		60 );
 
 /**
  * Posts
@@ -68,24 +50,9 @@ add_action( 'homepage', 'fastshop_on_sale_products',		60 );
  * @see  fastshop_display_comments()
  */
 add_action( 'fastshop_loop_post',			'fastshop_post_header',		10 );
-add_action( 'fastshop_loop_post',			'fastshop_post_meta',			20 );
-add_action( 'fastshop_loop_post',			'fastshop_post_content',		30 );
-add_action( 'fastshop_loop_after',		'fastshop_paging_nav',		10 );
-add_action( 'fastshop_single_post',		'fastshop_post_header',		10 );
-add_action( 'fastshop_single_post',		'fastshop_post_meta',			20 );
-add_action( 'fastshop_single_post',		'fastshop_post_content',		30 );
-add_action( 'fastshop_single_post_after',	'fastshop_post_nav',			10 );
-add_action( 'fastshop_single_post_after',	'fastshop_display_comments',	20 );
-
-/**
- * Pages
- * @see  fastshop_page_header()
- * @see  fastshop_page_content()
- * @see  fastshop_display_comments()
- */
-add_action( 'fastshop_page', 			'fastshop_page_header',		10 );
-add_action( 'fastshop_page', 			'fastshop_page_content',		20 );
-add_action( 'fastshop_page_after', 	'fastshop_display_comments',	10 );
+add_action( 'fastshop_loop_post',			'fastshop_post_meta',		20 );
+add_action( 'fastshop_loop_post',			'fastshop_post_content',	30 );
+add_action( 'fastshop_loop_after',			'fastshop_paging_nav',		10 );
 
 /**
  * Extras

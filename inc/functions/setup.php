@@ -15,8 +15,8 @@ if ( ! isset( $content_width ) ) {
 /**
  * Assign the Fast shop version to a var
  */
-$theme 					= wp_get_theme( 'fastshop' );
-$fastshop_version 	= $theme['Version'];
+$theme = wp_get_theme( 'fastshop' );
+$fastshop_version = $theme['Version'];
 
 if ( ! function_exists( 'fastshop_setup' ) ) :
 	/**
@@ -29,38 +29,18 @@ if ( ! function_exists( 'fastshop_setup' ) ) :
 	function fastshop_setup() {
 
 		/*
-		 * Load Localisation files.
-		 *
+		 * Localisation files.
 		 * Note: the first-loaded translation file overrides any following ones if the same translation is present.
 		 */
-
-		// wp-content/languages/themes/fastshop-it_IT.mo
 		load_theme_textdomain( 'fastshop', trailingslashit( WP_LANG_DIR ) . 'themes/' );
-
-		// wp-content/themes/child-theme-name/languages/it_IT.mo
 		load_theme_textdomain( 'fastshop', get_stylesheet_directory() . '/languages' );
-
-		// wp-content/themes/fastshop/languages/it_IT.mo
 		load_theme_textdomain( 'fastshop', get_template_directory() . '/languages' );
 
-		/**
-		 * Add default posts and comments RSS feed links to head.
-		 */
-		add_theme_support( 'automatic-feed-links' );
-
-		/*
-		 * Enable support for Post Thumbnails on posts and pages.
-		 *
-		 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
-		 */
-		add_theme_support( 'post-thumbnails' );
+		add_theme_support( 'automatic-feed-links' ); // Posts and comments RSS feed links in head
+		add_theme_support( 'post-thumbnails' ); // Post Thumbnails
 
 		// This theme uses wp_nav_menu() in two locations.
-		register_nav_menus( array(
-			'primary'		=> __( 'Primary Menu', 'fastshop' ),
-			'secondary'		=> __( 'Secondary Menu', 'fastshop' ),
-			'handheld'		=> __( 'Handheld Menu', 'fastshop' ),
-		) );
+		register_nav_menus( array( 'primary' => __( 'Primary Menu', 'fastshop' ) ) );
 
 		/*
 		 * Switch default core markup for search form, comment form, comments, galleries, captions and widgets
@@ -76,21 +56,12 @@ if ( ! function_exists( 'fastshop_setup' ) ) :
 		) );
 
 		// Setup the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( 'fastshop_custom_background_args', array(
+		add_theme_support( 'custom-background', array(
 			'default-color' => apply_filters( 'fastshop_default_background_color', 'fcfcfc' ),
-			'default-image' => '',
-		) ) );
+		) );
 
-		// Add support for the Site Logo plugin and the site logo functionality in JetPack
-		// https://github.com/automattic/site-logo
-		// http://jetpack.me/
-		add_theme_support( 'site-logo', array( 'size' => 'full' ) );
-
-		// Declare WooCommerce support
-		add_theme_support( 'woocommerce' );
-
-		// Declare support for title theme feature
-		add_theme_support( 'title-tag' );
+		add_theme_support( 'woocommerce' );// Declare WooCommerce support
+		add_theme_support( 'title-tag' );// Declare support for title theme feature
 	}
 endif; // fastshop_setup
 
@@ -102,38 +73,13 @@ endif; // fastshop_setup
 function fastshop_widgets_init() {
 	register_sidebar( array(
 		'name'          => __( 'Sidebar', 'fastshop' ),
-		'id'            => 'sidebar-1',
+		'id'            => 'sidebar',
 		'description'   => '',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
 	) );
-
-	register_sidebar( array(
-		'name'          => __( 'Below Header', 'fastshop' ),
-		'id'            => 'header-1',
-		'description'   => 'Widgets added to this region will appear beneath the header and above the main content.',
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-		'before_title'  => '<h3 class="widget-title">',
-		'after_title'   => '</h3>',
-	) );
-
-	$footer_widget_regions = apply_filters( 'fastshop_footer_widget_regions', 4 );
-
-	for ( $i = 1; $i <= intval( $footer_widget_regions ); $i++ ) {
-		register_sidebar( array(
-			'name' 				=> sprintf( __( 'Footer %d', 'fastshop' ), $i ),
-			'id' 				=> sprintf( 'footer-%d', $i ),
-			'description' 		=> sprintf( __( 'Widgetized Footer Region %d.', 'fastshop' ), $i ),
-			'before_widget' 	=> '<aside id="%1$s" class="widget %2$s">',
-			'after_widget' 		=> '</aside>',
-			'before_title' 		=> '<h3>',
-			'after_title' 		=> '</h3>',
-			)
-		);
-	}
 }
 /**
  * Enqueue scripts and styles.
