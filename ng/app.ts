@@ -1,4 +1,6 @@
-/// <reference path="../../../../node_modules/angular2/typings/browser.d.ts" />
+/**
+ * @developer wpdevelopment.me <shramee@wpdvelopment.me>
+ */
 
 import { bootstrap }    from 'angular2/platform/browser';
 import { enableProdMode, Component, OnChanges } from 'angular2/core';
@@ -7,28 +9,39 @@ import { RouteConfig, Router, ROUTER_DIRECTIVES, RouteParams, ROUTER_PROVIDERS }
 import { ArchiveComponent } from './archive.component.ts';
 import { ProductComponent } from './product.component.ts';
 import { WPAPI_Service } from "./wpapi.service.ts";
+import {OnInit} from "angular2/core";
 
 //enableProdMode();
 // Add the component meta data
 
 var fastshopRoutes = [
 	{
-		path: fsl10n.routes.product + '/:slug',
+		path: fastShopData.routes.product + '/:slug',
 		name: 'Product',
 		component: ProductComponent,
 	},
 	{
-		path: fsl10n.routes.productCat + '/:cat',
+		path: fastShopData.routes.productCat + '/:cat',
 		name: 'Product Category',
 		component: ArchiveComponent
 	},
 	{
-		path: fsl10n.routes.productTag + '/:tag',
+		path: fastShopData.routes.productCat + '/:parentCat/:cat',
+		name: 'Product Category',
+		component: ArchiveComponent
+	},
+	{
+		path: fastShopData.routes.productCat + '/:grandParentCat/:parentCat/:cat',
+		name: 'Product Category',
+		component: ArchiveComponent
+	},
+	{
+		path: fastShopData.routes.productTag + '/:tag',
 		name: 'Product Tag',
 		component: ArchiveComponent
 	},
 	{
-		path: fsl10n.routes.shop,
+		path: fastShopData.routes.shop,
 		name: 'Shop',
 		component: ArchiveComponent,
 		//useAsDefault: true
@@ -37,19 +50,22 @@ var fastshopRoutes = [
 
 @Component( {
 	selector: 'fastshop',
-	template: `
-	<h1>{{title}}</h1>
-	<router-outlet></router-outlet>
-	`,
+	template: '<router-outlet></router-outlet>',
 	directives: [ ROUTER_DIRECTIVES ],
-	providers: [ WPAPI_Service, ROUTER_PROVIDERS ]
+	providers: [ WPAPI_Service, ROUTER_PROVIDERS ],
+	inputs: [ 'preloaded' ]
 } )
 @RouteConfig( fastshopRoutes )
-export class AppComponent implements OnChanges {
-	constructor( private router: Router ) {}
-	title	= 'Welcome to FASTSHOPPE';
-	routerOnActivate( instruction ) {
-		console.log( 'Rerounting to ' + instruction );
+export class AppComponent implements OnInit {
+	preloaded : string = '';
+	constructor( private router: Router ) {
+		fastShopData.router = router;
+	}
+	ngOnInit() {
+		jQuery( 'a[href="' + fastShopData.site_url + fastShopData.routes.shop + '"]' ).click( ( e ) => {
+			e.preventDefault();
+			this.router.navigate( [ 'Shop' ] );
+		} );
 	}
 }
 

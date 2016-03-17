@@ -50,7 +50,6 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts", "./ar
                 }
                 ProductComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.product = this.routeParams.params;
                     this.wpApi.api('product?name=' + this.routeParams.params.slug)
                         .success(function (res) { return _this.product = JSON.parse(res); });
                     jQuery('body')
@@ -61,10 +60,16 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts", "./ar
                     jQuery('body')
                         .removeClass('single-product single');
                 };
+                ProductComponent.prototype.routerOnActivate = function () {
+                    if (fastshopPreloaded) {
+                        this.product = fastshopPreloaded;
+                        fastshopPreloaded = null;
+                    }
+                };
                 ProductComponent = __decorate([
                     core_1.Component({
                         selector: 'fs-product',
-                        templateUrl: fsl10n.url + '/ng/tpl/product.html',
+                        templateUrl: fastShopData.url + '/ng/tpl/product.html',
                         inputs: ['hero'],
                         directives: [archive_component_ts_1.ArchiveComponent],
                     }), 

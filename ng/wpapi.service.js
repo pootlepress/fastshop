@@ -18,7 +18,7 @@ System.register(['angular2/core'], function(exports_1) {
         execute: function() {
             WPAPI_Service = (function () {
                 function WPAPI_Service() {
-                    this.url = fsl10n.site_url + '/wp-json/fastshop/v1/';
+                    this.url = fastShopData.site_url + '/wp-json/fastshop/v1/';
                 }
                 WPAPI_Service.prototype.construct = function () { };
                 WPAPI_Service.prototype.api = function (endpoint) {

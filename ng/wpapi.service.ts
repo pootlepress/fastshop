@@ -6,7 +6,7 @@ import {Injectable}     from 'angular2/core';
 @Injectable()
 export class WPAPI_Service {
 	construct() {}
-	url = fsl10n.site_url + '/wp-json/fastshop/v1/';
+	url = fastShopData.site_url + '/wp-json/fastshop/v1/';
 
 	api ( endpoint ) {
 		console.log( this.url + endpoint );

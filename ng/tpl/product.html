@@ -3,7 +3,7 @@
 	<div class="images">
 		<a [attr.href]="product.thumbnail"  itemprop="image"
 		   class="woocommerce-main-image zoom" title="" data-rel="prettyPhoto[product-gallery]">
-			<img *ngIf="product.thumbnail" [attr.src]="product.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{product.title}} image"/>
+			<img *ngIf="product.thumbnail" [attr.src]="product.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{product.title}} image" width="100%"/>
 		</a>
 		<div *ngIf="product.thumbs" class="thumbnails columns-4" [innerHTML]="product.thumbs"></div>
 	</div>
@@ -34,7 +34,7 @@
 		<fs-product-archive [qry_args]="'post__in=' + product.related.join(',') + '&posts_per_page=3'"></fs-product-archive>
 	</div><!-- .related.products -->
 
-	<div *ngIf="product.related" class="related products">
+	<div *ngIf="product.upsells" class="related products">
 		<h2>You may also like&hellip;</h2>
 		<fs-product-archive [qry_args]="'post__in=' + product.upsells.join(',') + '&posts_per_page=3'"></fs-product-archive>
 	</div><!-- .related.products -->

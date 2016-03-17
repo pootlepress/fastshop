@@ -150,14 +150,14 @@ function fastshop_scripts() {
 	wp_enqueue_script( 'fastshop-system-polyfills', '//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js' );
 	wp_enqueue_script( 'fastshop-ie-shims', '//npmcdn.com/angular2@2.0.0-beta.9/es6/dev/src/testing/shims_for_IE.js' );
 
-	wp_enqueue_script( 'fastshop-ng-polyfills', '//code.angularjs.org/2.0.0-beta.9/angular2-polyfills.js' );
+	wp_enqueue_script( 'fastshop-ng-polyfills', '//code.angularjs.org/2.0.0-beta.9/angular2-polyfills.min.js' );
 	wp_enqueue_script( 'fastshop-ng-system', '//code.angularjs.org/tools/system.js' );
-	wp_enqueue_script( 'fastshop-typescript', '//npmcdn.com/typescript@1.8.2/lib/typescript.js' );
-	wp_enqueue_script( 'fastshop-ng-Rx', '//code.angularjs.org/2.0.0-beta.9/Rx.js' );
+	wp_enqueue_script( 'fastshop-typescript', '//cdnjs.cloudflare.com/ajax/libs/typescript/1.8.9/typescript.min.js' );
+	wp_enqueue_script( 'fastshop-ng-Rx', '//code.angularjs.org/2.0.0-beta.9/Rx.min.js' );
 	wp_enqueue_script( 'fastshop-ng', '//code.angularjs.org/2.0.0-beta.9/angular2.dev.js' );
 	wp_enqueue_script( 'fastshop-ng-router', '//code.angularjs.org/2.0.0-beta.9/router.min.js' );
-	wp_enqueue_script( 'fastshop-ng-http', '//code.angularjs.org/2.0.0-beta.9/http.min.js' );
-	wp_enqueue_script( 'fastshop-ng-web-api', '//npmcdn.com/a2-in-memory-web-api/web-api.js' );
+	//wp_enqueue_script( 'fastshop-ng-http', '//code.angularjs.org/2.0.0-beta.9/http.min.js' );
+	//wp_enqueue_script( 'fastshop-ng-web-api', '//npmcdn.com/a2-in-memory-web-api/web-api.js' );
 	//wp_enqueue_script( 'fastshop-ng-app', FS_URL . '/ng/whole-app.js', array(), '20130115', true );
 
 	wp_enqueue_script( 'fastshop-navigation', FS_URL . '/js/navigation.min.js', array( 'jquery' ), '20120206', true );
@@ -174,6 +174,7 @@ function fastshop_scripts() {
 
 /**
  * Enqueue scripts and styles.
+ * @action wp_head
  * @since  1.0.0
  */
 function fastshop_system_init() {
@@ -181,9 +182,10 @@ function fastshop_system_init() {
 		$site_url      = site_url();
 		$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 		$shop_slug     = str_replace( $site_url, '', $shop_page_url );
+
 		?>
 		<script>
-			fsl10n = {
+			fastShopData = {
 				url : '<?php echo FS_URL ?>',
 				site_url : '<?php echo $site_url ?>',
 				routes : {
@@ -194,6 +196,7 @@ function fastshop_system_init() {
 				},
 				wcStyle : '<?php echo WC()->plugin_url() . '/assets/css/woocommerce.css' ?>',
 			};
+			fastshopPreloaded = null;
 			System.config( {
 				transpiler : 'typescript',
 				typescriptOptions : { emitDecoratorMetadata : true },

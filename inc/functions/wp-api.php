@@ -32,8 +32,8 @@ class Fastshop_Wp_API {
 	 * Get products
 	 * @return string|null Post data
 	 */
-	public function api_products() {
-		$query = new WP_Query( $this->get_args() );
+	public function api_products( $args = array() ) {
+		$query = new WP_Query( $this->get_args( $args ) );
 
 		$products_json = array();
 
@@ -44,10 +44,10 @@ class Fastshop_Wp_API {
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			global $post;
-			$id = get_the_ID();
-			$product         = new WC_Product( $id );
-			$sale            = __( 'Sale!', 'woocommerce' );
-			$product_json    = array(
+			$id           = get_the_ID();
+			$product      = new WC_Product( $id );
+			$sale         = __( 'Sale!', 'woocommerce' );
+			$product_json = array(
 				'post_classes' => join( ' ', get_post_class() ),
 				'slug'         => $post->post_name,
 				'thumbnail'    => get_the_post_thumbnail_url( null, 'shop_thumbnail' ),
@@ -69,8 +69,8 @@ class Fastshop_Wp_API {
 	 * Get product
 	 * @return string|null Post data
 	 */
-	public function api_product() {
-		$query        = new WP_Query( $this->get_args() );
+	public function api_product( $args = array() ) {
+		$query = new WP_Query( $this->get_args( $args ) );
 
 		$json = array();
 
@@ -84,22 +84,22 @@ class Fastshop_Wp_API {
 			$product = wc_get_product( get_the_ID() );
 			$sale    = __( 'Sale!', 'woocommerce' );
 			$json    = array(
-				'post_classes' => join( ' ', get_post_class() ),
-				'slug'         => $post->post_name,
-				'tabs'         => $this->product_tabs(),
-				'related'      => $product->get_related( 3 ),
-				'upsells'      => $product->get_upsells(),
-				'meta'         => $this->product_meta( $product ),
-				'cartForm'    => $this->cart_form( $product ),
-				'thumbs'       => $this->product_thumbs( $product ),
-				'content'      => apply_filters( 'the_content', get_the_content() ),
-				'thumbnail'    => get_the_post_thumbnail_url( null, 'shop_single' ),
-				'title'        => get_the_title(),
-				'rating'       => $product->get_rating_html(),
-				'sale'         => $product->is_on_sale() ? "<span class='onsale'>$sale</span>" : '',
-				'delPrice'     => strip_tags( wc_price( $product->get_display_price( $product->get_regular_price() ) ) ),
-				'price'        => strip_tags( wc_price( $product->get_display_price() ) ),
-				'ID'           => get_the_ID(),
+				'post_classes'	=> join( ' ', get_post_class() ),
+				'slug'			=> $post->post_name,
+				'tabs'			=> $this->product_tabs(),
+				'related'		=> $product->get_related( 3 ),
+				'upsells'		=> $product->get_upsells(),
+				'meta'			=> $this->product_meta( $product ),
+				'cartForm'		=> $this->cart_form( $product ),
+				'thumbs'		=> $this->product_thumbs( $product ),
+				'content'		=> apply_filters( 'the_content', get_the_content() ),
+				'thumbnail'		=> get_the_post_thumbnail_url( null, 'shop_single' ),
+				'title'			=> get_the_title(),
+				'rating'		=> $product->get_rating_html(),
+				'sale'			=> $product->is_on_sale() ? "<span class='onsale'>$sale</span>" : '',
+				'delPrice'		=> strip_tags( wc_price( $product->get_display_price( $product->get_regular_price() ) ) ),
+				'price'			=> strip_tags( wc_price( $product->get_display_price() ) ),
+				'ID'			=> get_the_ID(),
 			);
 		}
 		wp_reset_postdata();
@@ -107,11 +107,24 @@ class Fastshop_Wp_API {
 		return json_encode( $json );
 	}
 
-	public function get_args() {
-		$args = wp_parse_args( $_GET, array(
+	public function get_args( $args ) {
+		$args = wp_parse_args( $args, $_GET );
+		$args = wp_parse_args( $args, array(
 			'posts_per_page' => 12,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
+			'post_type'      => 'product',
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
+			'meta_query'     => array(
+				array(
+					'key'     => '_visibility',
+					'value'   => array(
+						'visible',
+						'catalog',
+					),
+					'compare' => 'IN'
+				)
+
+			)
 		) );
 
 		if ( ! empty( $args['post__in'] ) ) {

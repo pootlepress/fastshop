@@ -8,7 +8,7 @@ import {ArchiveComponent} from "./archive.component.ts";
 
 @Component({
 	selector: 'fs-product',
-	templateUrl: fsl10n.url + '/ng/tpl/product.html',
+	templateUrl: fastShopData.url + '/ng/tpl/product.html',
 	inputs: ['hero'],
 	directives: [ ArchiveComponent ],
 })
@@ -35,7 +35,6 @@ export class ProductComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.product = this.routeParams.params;
 		this.wpApi.api( 'product?name=' + this.routeParams.params.slug )
 			.success( res => this.product = JSON.parse( res ) );
 
@@ -47,6 +46,12 @@ export class ProductComponent implements OnInit {
 		jQuery( 'body' )
 			.removeClass( 'single-product single' );
 
+	}
+	routerOnActivate () {
+		if ( fastshopPreloaded ) {
+			this.product = fastshopPreloaded;
+			fastshopPreloaded = null;
+		}
 	}
 }
 

@@ -1549,13 +1549,6 @@ video {
 /**
  * Pagination
  */
-.pagination,
-.woocommerce-pagination {
-  padding: 1em 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-width: 1px 0;
-  text-align: center;
-  clear: both; }
   .pagination .page-numbers,
   .woocommerce-pagination .page-numbers {
     list-style: none;

@@ -69,4 +69,4 @@ System.register(['angular2/core', 'angular2/router', "./wpapi.service.ts"], func
         }
     }
 });
-//# sourceMappingURL=archive.component.js.map
+//# sourceMappingURL=product-archive.component.js.map

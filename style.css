@@ -1550,13 +1550,6 @@ video {
 /**
  * Pagination
  */
-.pagination,
-.woocommerce-pagination {
-  padding: 1em 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-width: 1px 0;
-  text-align: center;
-  clear: both; }
   .pagination .page-numbers,
   .woocommerce-pagination .page-numbers {
     list-style: none;
@@ -1972,3 +1965,8 @@ video {
     margin-right: 0;
     padding: 1.618em;
     background-color: rgba(0, 0, 0, 0.025); }
+/* Fast shop */
+fastshop {
+	min-height: 79vh;
+	display: block;
+}
