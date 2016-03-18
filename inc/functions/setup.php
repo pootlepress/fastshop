@@ -32,7 +32,7 @@ if ( ! function_exists( 'fastshop_setup' ) ) :
 		 * Localisation files.
 		 * Note: the first-loaded translation file overrides any following ones if the same translation is present.
 		 */
-		load_theme_textdomain( 'fastshop', trailingslashit( WP_LANG_DIR ) . 'themes/' );
+		load_theme_textdomain( 'fastshop', WP_LANG_DIR . '/themes' );
 		load_theme_textdomain( 'fastshop', get_stylesheet_directory() . '/languages' );
 		load_theme_textdomain( 'fastshop', get_template_directory() . '/languages' );
 
@@ -124,35 +124,7 @@ function fastshop_scripts() {
  * @since  1.0.0
  */
 function fastshop_system_init() {
-	if ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
-		$site_url      = site_url();
-		$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
-		$shop_slug     = str_replace( $site_url, '', $shop_page_url );
 
-		?>
-		<script>
-			fastShopData = {
-				url : '<?php echo FS_URL ?>',
-				site_url : '<?php echo $site_url ?>',
-				routes : {
-					product : '<?php echo get_option( 'product_permalink_structure', '/product' ) ?>',
-					productCat : '<?php echo get_option( 'woocommerce_product_category_slug', '/product-category' ) ?>',
-					productTag : '<?php echo get_option( 'woocommerce_product_tag_slug', '/product-tag' ) ?>',
-					shop : '<?php echo $shop_slug ?>'
-				},
-				wcStyle : '<?php echo WC()->plugin_url() . '/assets/css/woocommerce.css' ?>',
-			};
-			fastshopPreloaded = null;
-			System.config( {
-				transpiler : 'typescript',
-				typescriptOptions : { emitDecoratorMetadata : true },
-				packages : { 'app' : { defaultExtension : 'js' } }
-			} );
-			System.import( '<?php echo FS_URL ?>/ng/app.ts' )
-				.then( null, console.error.bind( console ) );
-		</script>
-		<?php
-	}
 }
 
 /**

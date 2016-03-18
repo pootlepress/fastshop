@@ -3,7 +3,7 @@
  *
  * Handles toggling the navigation menu for small screens and adds a focus class to parent li's for accessibility.
  */
-( function() {
+( function( $ ) {
 	var container, button, menu;
 
 	container = document.getElementById( 'site-navigation' );
@@ -43,15 +43,27 @@
 	};
 
 	// Add focus class to li
-	jQuery( '.main-navigation, .secondary-navigation' ).find( 'a' ).on( 'focus.fastshop blur.fastshop', function() {
-		jQuery( this ).parents().toggleClass( 'focus' );
+	$( '.main-navigation, .secondary-navigation' ).find( 'a' ).on( 'focus.fastshop blur.fastshop', function() {
+		$( this ).parents().toggleClass( 'focus' );
 	});
 
 	// Add focus to cart dropdown
-	jQuery( window ).load( function() {
-		jQuery( '.site-header-cart' ).find( 'a' ).on( 'focus.fastshop blur.fastshop', function() {
-			jQuery( this ).parents().toggleClass( 'focus' );
+	$( window ).load( function() {
+		$( '.site-header-cart' ).find( 'a' ).on( 'focus.fastshop blur.fastshop', function() {
+			$( this ).parents().toggleClass( 'focus' );
 		});
 	});
 
-} )();
+	$( 'fastshop' ).delegate( "a", "click", function ( e ) {
+		var $t = $( this ),
+			route = $t.attr( 'href' );
+		console.log( route.indexOf( fastShopData.siteUrl ) );
+		if ( -1 !== route.indexOf( fastShopData.siteUrl ) ) {
+			e.preventDefault();
+			route = route.replace( fastShopData.siteUrl );
+			fastShopData.router.navigateByUrl( route );
+		}
+		e.preventDefault();
+	} );
+
+} )( jQuery );

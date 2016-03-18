@@ -13,31 +13,12 @@
  * @see  fastshop_header_widget_region()
  * @see  fastshop_get_sidebar()
  */
-add_action( 'after_setup_theme',			'fastshop_setup' );
-add_action( 'widgets_init',					'fastshop_widgets_init' );
-add_action( 'wp_enqueue_scripts',			'fastshop_scripts',				250 );
-add_action( 'wp_head',						'fastshop_system_init',			250 );
-add_action( 'wp_enqueue_scripts',			'fastshop_child_scripts',		30 ); // After WooCommerce
-add_action( 'fastshop_before_content',	'fastshop_header_widget_region',	10 );
-add_action( 'fastshop_sidebar',			'fastshop_get_sidebar',				10 );
-
-/**
- * Header
- * @see  fastshop_skip_links()
- * @see  fastshop_site_branding()
- * @see  fastshop_primary_navigation()
- */
-add_action( 'fastshop_header', 'fastshop_skip_links', 				0 );
-add_action( 'fastshop_header', 'fastshop_site_branding',			20 );
-add_action( 'fastshop_header', 'fastshop_primary_navigation',		50 );
-
-/**
- * Footer
- * @see  fastshop_footer_widgets()
- * @see  fastshop_credit()
- */
-add_action( 'fastshop_footer', 'fastshop_footer_widgets',	10 );
-add_action( 'fastshop_footer', 'fastshop_credit',			20 );
+add_action( 'after_setup_theme',	'fastshop_setup' );
+add_action( 'widgets_init',			'fastshop_widgets_init' );
+add_action( 'wp_enqueue_scripts',	'fastshop_scripts',				250 );
+add_action( 'wp_head',				'fastshop_system_init',			250 );
+add_action( 'wp_enqueue_scripts',	'fastshop_child_scripts',		30 ); // After WooCommerce
+add_action( 'fastshop_sidebar',		'fastshop_get_sidebar',			10 );
 
 /**
  * Posts

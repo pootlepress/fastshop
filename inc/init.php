@@ -25,11 +25,11 @@ require dirname( __FILE__ ) . '/functions/wp-api.php';
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer/hooks.php';
-require get_template_directory() . '/inc/customizer/controls.php';
-require get_template_directory() . '/inc/customizer/display.php';
-require get_template_directory() . '/inc/customizer/functions.php';
-require get_template_directory() . '/inc/customizer/custom-header.php';
+require dirname( __FILE__ ) . '/customizer/hooks.php';
+require dirname( __FILE__ ) . '/customizer/controls.php';
+require dirname( __FILE__ ) . '/customizer/display.php';
+require dirname( __FILE__ ) . '/customizer/functions.php';
+require dirname( __FILE__ ) . '/customizer/custom-header.php';
 
 /**
  * Structure.
@@ -37,8 +37,6 @@ require get_template_directory() . '/inc/customizer/custom-header.php';
  */
 require dirname( __FILE__ ) . '/structure/hooks.php';
 require dirname( __FILE__ ) . '/structure/post.php';
-require dirname( __FILE__ ) . '/structure/header.php';
-require dirname( __FILE__ ) . '/structure/footer.php';
 require dirname( __FILE__ ) . '/structure/comments.php';
 require dirname( __FILE__ ) . '/structure/template-tags.php';
 

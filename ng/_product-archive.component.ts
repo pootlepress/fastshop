@@ -12,7 +12,7 @@ import {WPAPI_Service} from "./wpapi.service.ts";
 	inputs: ['products']
 } )
 
-export class ArchiveComponent implements OnInit {
+export class ProductsComponent implements OnInit {
 	products : ArchiveProduct[];
 	qry_args : string = '';
 

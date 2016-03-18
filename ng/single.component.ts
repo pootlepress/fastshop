@@ -7,12 +7,12 @@ import {WPAPI_Service} from "./wpapi.service.ts";
 import {ProductsComponent} from "./products.component.ts";
 
 @Component({
-	selector: 'fs-product',
-	templateUrl: fastShopData.url + '/ng/tpl/product.html',
+	selector: 'fs-single',
+	templateUrl: fastShopData.url + '/ng/tpl/single.html',
 	inputs: ['hero'],
 	directives: [ ProductsComponent ],
 })
-export class ProductComponent implements OnInit {
+export class SingleComponent implements OnInit {
 	private product : SingleProduct = {
 		post_classes	: '',
 		slug			: '',
@@ -39,13 +39,12 @@ export class ProductComponent implements OnInit {
 			.success( res => this.product = JSON.parse( res ) );
 
 		jQuery( 'body' )
-			.addClass( 'single-product single' )
+			.addClass( 'single' )
 			.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
 	}
 	routerOnDeactivate () {
 		jQuery( 'body' )
 			.removeClass( 'single-product single' );
-
 	}
 	routerOnActivate () {
 		if ( fastshopPreloaded ) {
@@ -71,5 +70,5 @@ interface SingleProduct {
 	sale			: string,
 	delPrice		: string,
 	price			: string,
-	ID				: int,
+	ID				: number,
 }

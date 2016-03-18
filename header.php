@@ -9,47 +9,56 @@
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> <?php fastshop_html_tag_schema(); ?>>
 <head>
-<meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
-<?php wp_head(); ?>
+	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
-	<?php
-	do_action( 'fastshop_before_header' ); ?>
-
-	<header id="masthead" class="site-header" role="banner" <?php if ( get_header_image() != '' ) { echo 'style="background-image: url(' . esc_url( get_header_image() ) . ');"'; } ?>>
-		<div class="col-full">
-
-			<?php
-			/**
-			 * @hooked fastshop_skip_links - 0
-			 * @hooked fastshop_social_icons - 10
-			 * @hooked fastshop_site_branding - 20
-			 * @hooked fastshop_product_search - 40
-			 * @hooked fastshop_primary_navigation - 50
-			 * @hooked fastshop_header_cart - 60
-			 */
-			do_action( 'fastshop_header' ); ?>
-
-		</div>
-	</header><!-- #masthead -->
+<script>
 
 	<?php
-	/**
-	 * @hooked fastshop_header_widget_region - 10
-	 */
-	do_action( 'fastshop_before_content' ); ?>
-
-	<div id="content" class="site-content" tabindex="-1">
-		<div class="col-full">
-
-		<?php
-		/**
-		 * @hooked woocommerce_breadcrumb - 10
-		 */
-		do_action( 'fastshop_content_top' ); ?>
+	$site_url = untrailingslashit( site_url() );
+	$site_name = get_bloginfo( 'name' );
+	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
+	$pootlepress = '<a href="http://www.pootlepress.com">pootlepress</a>';
+	$fs_data = array(
+		'url'      => FS_URL,
+		'siteUrl'  => $site_url,
+		'siteName' => $site_name,
+		'tagline'  => get_bloginfo( 'description' ),
+		'menu'     => wp_nav_menu(
+			array(
+				'theme_location'  => 'primary',
+				'container_class' => 'primary-navigation',
+				'echo'            => false,
+			)
+		),
+		'routes'   => array(
+			'product'    => get_option( 'product_permalink_structure', '/product' ),
+			'productCat' => get_option( 'woocommerce_product_category_slug', '/product-category' ),
+			'productTag' => get_option( 'woocommerce_product_tag_slug', '/product-tag' ),
+			'shop'       => str_replace( $site_url, '', $shop_page_url ),
+		),
+		'wcStyle'  => WC()->plugin_url() . '/assets/css/woocommerce.css',
+		'footer' => "&copy; $site_name " . date( 'Y' ) . '<br>' . sprintf( __( '%1$s designed by %2$s.', 'fastshop' ), 'Fast shop', $pootlepress ),
+		'copy' => apply_filters( 'fastshop_copyright_text', "&copy; $site_name " . date( 'Y' ) ),
+	);
+	ob_start();
+	get_sidebar();
+	$fs_data['sidebar'] = ob_get_contents();
+	ob_end_clean();
+	?>
+	fastShopData = <?php echo json_encode( $fs_data ) ?>;
+	fastshopPreloaded = null;
+	System.config( {
+		transpiler : 'typescript',
+		typescriptOptions : { emitDecoratorMetadata : true },
+		packages : { 'app' : { defaultExtension : 'js' } }
+	} );
+	System.import( '<?php echo FS_URL ?>/ng/app.ts' )
+		.then( null, console.error.bind( console ) );
+</script>

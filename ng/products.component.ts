@@ -12,12 +12,11 @@ import {WPAPI_Service} from "./wpapi.service.ts";
 	inputs: ['products']
 } )
 
-export class ArchiveComponent implements OnInit {
+export class ProductsComponent implements OnInit {
 	products : ArchiveProduct[];
 	qry_args : string = '';
 
-	constructor( private router : Router, private routeParams : RouteParams, private wpApi : WPAPI_Service ) {
-	}
+	constructor( private router : Router, private routeParams : RouteParams, private wpApi : WPAPI_Service ) {}
 
 	ngOnInit() {
 		if ( ! fastshopPreloaded ) {
@@ -29,9 +28,14 @@ export class ArchiveComponent implements OnInit {
 		}
 	}
 
+	routerOnActivate () {
+		console.log( 'Activated!' );
+	}
+
 	openProduct( product ) {
 		fastshopPreloaded = product;
-		this.router.navigate( ['Product', { slug: product.slug } ] );
+		console.log( '/product/' + product.slug );
+		fastShopData.router.navigateByUrl( '/product/' + product.slug );
 	}
 
 	productClasses( classes, i ) {

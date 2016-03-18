@@ -12,7 +12,7 @@ import {WPAPI_Service} from "./wpapi.service.ts";
 	inputs: ['products']
 } )
 
-export class ArchiveComponent implements OnInit {
+export class ProductsComponent implements OnInit {
 	products : ArchiveProduct[];
 	qry_args : string = '';
 
@@ -20,6 +20,7 @@ export class ArchiveComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		console.log( 'ProductsComponent' );
 		if ( ! fastshopPreloaded ) {
 			this.wpApi.api( 'products?' + this.qry_args )
 				.success( res => this.products = JSON.parse( res ) );
@@ -31,7 +32,8 @@ export class ArchiveComponent implements OnInit {
 
 	openProduct( product ) {
 		fastshopPreloaded = product;
-		this.router.navigate( ['Product', { slug: product.slug } ] );
+		console.log( 'product/' + product.slug );
+		fastShopData.router.navigateByUrl( 'product/' + product.slug );
 	}
 
 	productClasses( classes, i ) {

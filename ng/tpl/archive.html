@@ -1,5 +1,10 @@
+<h1>Shop!</h1>
+<div *ngIf="! products">
+	No products found!
+</div>
+<h2>Products</h2>
 <ul *ngIf="products && products[0].title" class="products">
-	<li *ngFor="#p of products; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
+<li *ngFor="#p of products; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
 		<a *ngIf="p.title" style="cursor: pointer;" (click)="openProduct(p)">
 			<img *ngIf="p.thumbnail" [attr.src]="p.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{p.title}} image"/>
 			<h3>{{p.title}}</h3>
