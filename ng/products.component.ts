@@ -9,7 +9,7 @@ import {WPAPI_Service} from "./wpapi.service.ts";
 @Component( {
 	selector: 'fs-product-archive',
 	templateUrl: fastShopData.url + '/ng/tpl/archive.html',
-	inputs: ['products']
+	inputs: ['qry_args']
 } )
 
 export class ProductsComponent implements OnInit {

@@ -1,4 +1,4 @@
-<div id="product-70" [ngClass]="product.post_classes">
+<div *ngIf="product && product.ID" [attr.id]="'product-' + product.ID" [ngClass]="product.post_classes">
 	<span *ngIf="product.sale" class="onsale">Sale!</span>
 	<div class="images">
 		<a [attr.href]="product.thumbnail"  itemprop="image"
