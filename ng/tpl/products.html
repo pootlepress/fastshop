@@ -1,6 +1,3 @@
-<div *ngIf="! products">
-	No products found!
-</div>
 <ul *ngIf="products && products[0].title" class="products">
 <li *ngFor="#p of products; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
 		<a *ngIf="p.title" style="cursor: pointer;" (click)="openProduct(p)">

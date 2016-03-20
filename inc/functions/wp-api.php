@@ -30,7 +30,11 @@ class Fastshop_Wp_API {
 		) );
 		register_rest_route( 'fastshop/v1', '/single', array(
 			'methods'  => 'GET',
-			'callback' => array( $this, 'api_single' ),
+			'callback' => array( $this, 'api_post' ),
+		) );
+		register_rest_route( 'fastshop/v1', '/posts', array(
+			'methods'  => 'GET',
+			'callback' => array( $this, 'api_posts' ),
 		) );
 	}
 
@@ -38,8 +42,18 @@ class Fastshop_Wp_API {
 	 * Get products
 	 * @return null|string Post data
 	 */
-	public function api_single() {
-		return $this->get_single();
+	public function api_post() {
+		return $this->get_posts( array(
+			'posts_per_page' => 1,
+		) );
+	}
+
+	/**
+	 * Get products
+	 * @return null|string Post data
+	 */
+	public function api_posts() {
+		return $this->get_posts();
 	}
 
 	/**
@@ -87,7 +101,7 @@ class Fastshop_Wp_API {
 	 * @param array $args
 	 * @return null|string Post data
 	 */
-	public function get_single( $args = array() ) {
+	public function get_posts( $args = array() ) {
 		global $wp_query;
 		ob_start();
 
@@ -97,7 +111,7 @@ class Fastshop_Wp_API {
 			echo '<h1>404 - Page Not Found!</h1>';
 		}
 
-		get_template_part( 'loop', get_post_type() );
+		get_template_part( 'loop' );
 		$return = ob_get_contents();
 		ob_end_clean();
 

@@ -25,8 +25,17 @@
 	$site_name = get_bloginfo( 'name' );
 	$shop_page_url = get_permalink( wc_get_page_id( 'shop' ) );
 	$pootlepress = '<a href="http://www.pootlepress.com">pootlepress</a>';
+	if ( get_option( 'show_on_front' ) == 'page' ) {
+		$home = get_post( get_option( 'page_on_front' ) )->post_name;
+		$blog = get_post( get_option( 'page_for_posts' ) )->post_name;
+	} else {
+		$home = '';
+		$blog = '';
+	}
 	$fs_data = array(
 		'url'      => FS_URL,
+		'home'     => $home,
+		'blog'     => $blog,
 		'siteUrl'  => $site_url,
 		'siteName' => $site_name,
 		'tagline'  => get_bloginfo( 'description' ),

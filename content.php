@@ -57,14 +57,25 @@
 	</aside>
 	<div class="entry-content" itemprop="articleBody">
 		<?php
-		fastshop_post_thumbnail( 'full' );
+		if ( is_single() ) {
 
-		the_content(
-			sprintf(
-				__( 'Continue reading %s', 'fastshop' ),
-				'<span class="screen-reader-text">' . get_the_title() . '</span>'
-			)
-		);
+			fastshop_post_thumbnail( 'full' );
+
+			the_content(
+				sprintf(
+					__( 'Continue reading %s', 'fastshop' ),
+					'<span class="screen-reader-text">' . get_the_title() . '</span>'
+				)
+			);
+
+		} else {
+			if ( in_array( 'medium_large', get_intermediate_image_sizes() ) ) {
+				fastshop_post_thumbnail( 'medium_large' );
+			} else {
+				fastshop_post_thumbnail( 'medium' );
+			}
+			the_excerpt();
+		}
 
 		wp_link_pages( array(
 			'before' => '<div class="page-links">' . __( 'Pages:', 'fastshop' ),

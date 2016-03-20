@@ -32,9 +32,6 @@ export class ProductsComponent implements OnInit {
 
 	openProduct( product ) {
 		fastshopPreloaded = product;
-		console.log( 'Router' );
-		console.log( jQuery.extend( true, {}, fastShopData.router ) );
-		console.log( 'Navigating to /product/' + product.slug );
 		fastShopData.router.navigateByUrl( '/product/' + product.slug );
 	}
 

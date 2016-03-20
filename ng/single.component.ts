@@ -4,26 +4,35 @@
 import { Component, OnInit } from 'angular2/core';
 import {Router, RouteParams} from 'angular2/router';
 import {WPAPI_Service} from "./wpapi.service.ts";
-import {ProductsComponent} from "./products.component.ts";
+import {BlogComponent} from "./blog.component.ts";
 
 @Component({
 	selector: 'fs-single',
 	templateUrl: fastShopData.url + '/ng/tpl/single.html',
-	inputs: ['hero'],
-	directives: [ ProductsComponent ],
+	directives: [ BlogComponent ],
 })
 export class SingleComponent implements OnInit {
-	private html : string;
+	html : string;
+	slug : string;
 
 	constructor( private router: Router, private routeParams: RouteParams, private wpApi: WPAPI_Service ) {}
 
 	ngOnInit() {
-		this.wpApi.api( 'single?name=' + this.routeParams.params.slug )
-			.success( res => this.html = res );
+		// For homepage
+		var slug = '' == this.routeParams.params.slug ? fastShopData.home : this.routeParams.params.slug;
+		// For Blog
+		this.slug = slug.replace( fastShopData.blog, '' );
 
-		jQuery( 'body' )
-			.addClass( 'single' )
-			.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
+		if ( this.slug ) {
+			this.wpApi.api( 'single?posts_per_page=1&name=' + this.slug )
+				.success( res => this.html = res );
+
+			jQuery( 'body' )
+				.addClass( 'single' )
+				.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
+		} else {
+			this.slug = 'blogComponent';
+		}
 	}
 	routerOnDeactivate () {
 		jQuery( 'body' )

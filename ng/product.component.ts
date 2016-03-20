@@ -9,7 +9,6 @@ import {ProductsComponent} from "./products.component.ts";
 @Component({
 	selector: 'fs-product',
 	templateUrl: fastShopData.url + '/ng/tpl/product.html',
-	inputs: ['hero'],
 	directives: [ ProductsComponent ],
 })
 export class ProductComponent implements OnInit {

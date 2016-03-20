@@ -1,1 +1,4 @@
-<div [innerHTML]="html"></div>
+<div *ngIf="'blogComponent' == slug">
+	<fs-blog></fs-blog>
+</div>
+<div *ngIf="html" [innerHTML]="html"></div>

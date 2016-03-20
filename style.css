@@ -2515,3 +2515,19 @@ fastshop {
 	min-height: 79vh;
 	display: block;
 }
+router-outlet + * {
+	display: block;
+	min-height: 70vh;
+	background: url( 'img/loader.gif' ) center 25vh no-repeat;
+}
+
+router-outlet + *:after {
+	display: block;
+	clear: both;
+	content: '';
+}
+
+router-outlet + * > * {
+	display: block;
+	background: #fff;
+}
