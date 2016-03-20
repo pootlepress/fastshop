@@ -13,30 +13,13 @@ import {ProductsComponent} from "./products.component.ts";
 	directives: [ ProductsComponent ],
 })
 export class SingleComponent implements OnInit {
-	private product : SingleProduct = {
-		post_classes	: '',
-		slug			: '',
-		tabs			: '',
-		upsells			: '',
-		cartForm		: '',
-		related			: '',
-		content			: '',
-		thumbnail		: '',
-		meta			: '',
-		title			: '',
-		rating			: '',
-		sale			: '',
-		delPrice		: '',
-		price			: '',
-		ID				: 0
-	};
+	private html : string;
 
-	constructor( private router: Router, private routeParams: RouteParams, private wpApi: WPAPI_Service ) {
-	}
+	constructor( private router: Router, private routeParams: RouteParams, private wpApi: WPAPI_Service ) {}
 
 	ngOnInit() {
-		this.wpApi.api( 'product?name=' + this.routeParams.params.slug )
-			.success( res => this.product = JSON.parse( res ) );
+		this.wpApi.api( 'single?name=' + this.routeParams.params.slug )
+			.success( res => this.html = res );
 
 		jQuery( 'body' )
 			.addClass( 'single' )

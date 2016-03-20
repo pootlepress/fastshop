@@ -8,7 +8,7 @@ import {WPAPI_Service} from "./wpapi.service.ts";
 
 @Component( {
 	selector: 'fs-product-archive',
-	templateUrl: fastShopData.url + '/ng/tpl/archive.html',
+	templateUrl: fastShopData.url + '/ng/tpl/products.html',
 	inputs: ['qry_args']
 } )
 
@@ -28,13 +28,13 @@ export class ProductsComponent implements OnInit {
 		}
 	}
 
-	routerOnActivate () {
-		console.log( 'Activated!' );
-	}
+	routerOnActivate () {}
 
 	openProduct( product ) {
 		fastshopPreloaded = product;
-		console.log( '/product/' + product.slug );
+		console.log( 'Router' );
+		console.log( jQuery.extend( true, {}, fastShopData.router ) );
+		console.log( 'Navigating to /product/' + product.slug );
 		fastShopData.router.navigateByUrl( '/product/' + product.slug );
 	}
 

@@ -38,20 +38,26 @@ export class ProductComponent implements OnInit {
 		this.wpApi.api( 'product?name=' + this.routeParams.params.slug )
 			.success( res => this.product = JSON.parse( res ) );
 
-		jQuery( 'body' )
-			.addClass( 'single-product single' )
-			.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
+	}
+
+	takeToShop() {
+		console.log( 'Router' );
+		console.log( jQuery.extend( true, {}, fastShopData.router ) );
+		console.log( 'Navigating to /shop' );
+		fastShopData.router.navigateByUrl( '/shop' );
 	}
 	routerOnDeactivate () {
 		jQuery( 'body' )
 			.removeClass( 'single-product single' );
-
 	}
 	routerOnActivate () {
 		if ( fastshopPreloaded ) {
 			this.product = fastshopPreloaded;
 			fastshopPreloaded = null;
 		}
+		jQuery( 'body' )
+			.addClass( 'single-product single' )
+			.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
 	}
 }
 

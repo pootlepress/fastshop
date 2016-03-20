@@ -9,18 +9,10 @@
  * Setup.
  * Enqueue styles, register widget regions, etc.
  */
-require dirname( __FILE__ ) . '/functions/setup.php';
-
-/**
- * Custom functions that act independently of the theme templates.
- */
-require dirname( __FILE__ ) . '/functions/extras.php';
-
-/**
- * API endpoints
- * Enqueue styles, register widget regions, etc.
- */
-require dirname( __FILE__ ) . '/functions/wp-api.php';
+require dirname( __FILE__ ) . '/functions/setup.php';			// Enqueue styles, register widget regions, etc.
+require dirname( __FILE__ ) . '/functions/extras.php';			// Extra custom functionality
+require dirname( __FILE__ ) . '/functions/wp-api.php';			// WordPress API Endpoints
+require dirname( __FILE__ ) . '/functions/template-tags.php';	// Template tags
 
 /**
  * Customizer additions.
@@ -36,9 +28,7 @@ require dirname( __FILE__ ) . '/customizer/custom-header.php';
  * Template functions used throughout the theme.
  */
 require dirname( __FILE__ ) . '/structure/hooks.php';
-require dirname( __FILE__ ) . '/structure/post.php';
 require dirname( __FILE__ ) . '/structure/comments.php';
-require dirname( __FILE__ ) . '/structure/template-tags.php';
 
 /**
  * Load WooCommerce compatibility files.

@@ -7,9 +7,6 @@
  *
  * @package fastshop
  */
-
-do_action( 'fastshop_loop_before' );
-
 while ( have_posts() ) : the_post();
 
 	/* Include the Post-Format-specific template for the content.
@@ -19,8 +16,3 @@ while ( have_posts() ) : the_post();
 	get_template_part( 'content', get_post_format() );
 
 endwhile;
-
-/**
- * @hooked fastshop_paging_nav - 10
- */
-do_action( 'fastshop_loop_after' );

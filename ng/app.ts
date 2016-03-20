@@ -3,7 +3,7 @@
  */
 
 import { bootstrap }    from 'angular2/platform/browser';
-import { enableProdMode, Component, OnChanges } from 'angular2/core';
+import { enableProdMode, Component, ElementRef } from 'angular2/core';
 import { RouteConfig, Router, ROUTER_DIRECTIVES, RouteParams, ROUTER_PROVIDERS } from 'angular2/router';
 
 import { ProductsComponent } from './products.component.ts';
@@ -52,7 +52,7 @@ var fastshopRoutes = [
 		component: ProductsComponent,
 	},
 	{
-		path: '/:name',
+		path: '/:slug',
 		name: 'Single',
 		component: SingleComponent,
 	}
@@ -84,15 +84,21 @@ var fastshopRoutes = [
 export class AppComponent implements OnInit {
 	preloaded : string = '';
 	router;
-	constructor( router : Router ) {
-		this.router = router;
+	constructor( private el:ElementRef, router : Router ) {
+		fastShopData.router = this.router = router;
 	}
 
 	ngOnInit() {
-		fastShopData.router = this.router;
-		jQuery( 'body' ).delegate( 'a[href="' + fastShopData.siteUrl + fastShopData.routes.shop + '"]', "click", ( e ) => {
-			e.preventDefault();
-			this.router.navigate( ['Shop'] );
+		console.log( jQuery( this.el.nativeElement ).length );
+		jQuery( this.el.nativeElement ).delegate( 'a[href^="' + fastShopData.siteUrl + '"]', "click", function ( e ) {
+			var $t = jQuery( this ),
+			    route = $t.attr( 'href' );
+			if ( -1 == route.indexOf( fastShopData.siteUrl + '/wp-' ) ) {
+				e.preventDefault();
+				route = route.replace( fastShopData.siteUrl, '' );
+				console.log( route );
+				fastShopData.router.navigateByUrl( route );
+			}
 		} );
 	}
 }
