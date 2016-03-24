@@ -221,8 +221,8 @@ class Fastshop_Wp_API {
 				'price'        => strip_tags( wc_price( $product->get_display_price() ) ),
 				'ID'           => get_the_ID(),
 			);
-			$return['related'] = $this->get_products( $return['related'] );
-			$return['upsells'] = $this->get_products( $return['upsells'] );
+			$return['related'] = $return['related']['post__in'] ? $this->get_products( $return['related'] ) : null;
+			$return['upsells'] = $return['upsells']['post__in'] ? $this->get_products( $return['upsells'] ) : null;
 			$return['related'] = is_array( $return['related'] ) ? $return['related']['products'] : null;
 			$return['upsells'] = is_array( $return['upsells'] ) ? $return['upsells']['products'] : null;
 		}
