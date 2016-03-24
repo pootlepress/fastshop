@@ -1,3 +1,26 @@
+<div *ngIf="! qry_args && ! error" class="fastshop-sorting">
+	<div *ngIf="notices" [innerHTML]="notices"></div>
+	<div class="woocommerce-ordering">
+		<select [value]="orderby" (input)="changeOrder( $event.target.value )" name="orderby" class="orderby"><option value="menu_order" selected="selected">Default sorting</option><option value="popularity">Sort by popularity</option><option value="rating">Sort by average rating</option><option value="date">Sort by newness</option><option value="price">Sort by price: low to high</option><option value="price-desc">Sort by price: high to low</option></select>
+	</div>
+	<div *ngIf="jsonData.result_count" class="woocommerce-result-count" [innerHTML]="jsonData.result_count"></div>
+	<div *ngIf="jsonData.pagination && 1 < jsonData.total_pages" class="woocommerce-pagination">
+		<ul class="page-numbers">
+			<li *ngIf="paged != 1">
+				<span (click)="changePage( paged - 1 )" class="prev page-numbers">←</span>
+			</li>
+			<li *ngFor="#i of jsonData.pagination">
+				<span (click)="changePage( i )" class="page-numbers {{i == paged ? 'current' : ''}}">{{i}}</span>
+			</li>
+			<li *ngIf="paged != jsonData.pagination.length">
+				<span (click)="changePage( paged + 1 )" class="next page-numbers">→</span>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div *ngIf="error" [innerHTML]="error"></div>
+
 <ul *ngIf="products && products[0].title" class="products">
 <li *ngFor="#p of products; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
 		<a *ngIf="p.title" style="cursor: pointer;" (click)="openProduct(p)">
@@ -5,12 +28,12 @@
 			<h3>{{p.title}}</h3>
 			<div [innerHTML]="p.rating"></div>
 			<div [innerHTML]="p.sale"></div>
-				<span class="price">
-					<del *ngIf="p.delPrice > p.price" ><span [innerHTML]="p.delPrice" class="amount"></span></del>
-					<ins><span [innerHTML]="p.price" class="amount"></span></ins>
-				</span>
+			<span class="price">
+				<del *ngIf="p.delPrice > p.price" ><span [innerHTML]="p.delPrice" class="amount"></span></del>
+				<ins><span [innerHTML]="p.price" class="amount"></span></ins>
+			</span>
 		</a>
-		<a *ngIf="p.title" rel="nofollow" href="/ng/shop/?add-to-cart={{p.ID}}" data-quantity="1" [attr.dataProduct_id]="p.ID" data-product_sku=""
+		<a *ngIf="p.title" rel="nofollow" href="?add-to-cart={{p.ID}}" data-quantity="1" [attr.data-product_id]="p.ID" data-product_sku=""
 		   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>
 	</li>
 </ul>

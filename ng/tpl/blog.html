@@ -1,1 +1,27 @@
-<div *ngIf="html" [innerHTML]="html"></div>
+<div *ngIf="jsonData.pagination && 1 < jsonData.total_pages" class="pagination">
+	<ul class="page-numbers">
+		<li *ngIf="paged != 1">
+			<span (click)="changePage( paged - 1 )" class="prev page-numbers">←</span>
+		</li>
+		<li *ngFor="#i of jsonData.pagination">
+			<span (click)="changePage( i )" class="page-numbers {{i == paged ? 'current' : ''}}">{{i}}</span>
+		</li>
+		<li *ngIf="paged != jsonData.pagination.length">
+			<span (click)="changePage( paged + 1 )" class="next page-numbers">→</span>
+		</li>
+	</ul>
+</div>
+<div class="posts-container" *ngIf="html" [innerHTML]="html"></div>
+<div *ngIf="jsonData.pagination && 1 < jsonData.total_pages" class="pagination">
+	<ul class="page-numbers">
+		<li *ngIf="paged != 1">
+			<span (click)="changePage( paged - 1 )" class="prev page-numbers">←</span>
+		</li>
+		<li *ngFor="#i of jsonData.pagination">
+			<span (click)="changePage( i )" class="page-numbers {{i == paged ? 'current' : ''}}">{{i}}</span>
+		</li>
+		<li *ngIf="paged != jsonData.pagination.length">
+			<span (click)="changePage( paged + 1 )" class="next page-numbers">→</span>
+		</li>
+	</ul>
+</div>

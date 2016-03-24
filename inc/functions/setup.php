@@ -96,15 +96,17 @@ function fastshop_scripts() {
 	wp_enqueue_script( 'fastshop-system-polyfills', '//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js' );
 	wp_enqueue_script( 'fastshop-ie-shims', '//npmcdn.com/angular2@2.0.0-beta.11/es6/dev/src/testing/shims_for_IE.js' );
 
-	wp_enqueue_script( 'fastshop-ng-polyfills', FS_URL . '/js/ng-deps/angular2-polyfills.min.js' );
+	wp_enqueue_script( 'fastshop-ng-polyfills', '//cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.9/angular2-polyfills.min.js' );
 	wp_enqueue_script( 'fastshop-ng-system', '//code.angularjs.org/tools/system.js' );
 	wp_enqueue_script( 'fastshop-typescript', '//cdnjs.cloudflare.com/ajax/libs/typescript/1.8.9/typescript.min.js' );
 	wp_enqueue_script( 'fastshop-ng-Rx', FS_URL . '/js/ng-deps/Rx.min.js' );
-	wp_enqueue_script( 'fastshop-ng', FS_URL . '/js/ng-deps/angular2.dev.js' );
+	wp_enqueue_script( 'fastshop-ng', '//cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.9/angular2.dev.js' );
 	wp_enqueue_script( 'fastshop-ng-router', FS_URL . '/js/ng-deps/router.min.js' );
-	//wp_enqueue_script( 'fastshop-ng-http', FS_URL . '/js/ng-deps/http.min.js' );
-	//wp_enqueue_script( 'fastshop-ng-web-api', '//npmcdn.com/a2-in-memory-web-api/web-api.js' );
-	//wp_enqueue_script( 'fastshop-ng-app', FS_URL . '/ng/whole-app.js', array(), '20130115', true );
+
+	$wc_assets = str_replace( array( 'http:', 'https:' ), '', WC()->plugin_url() ) . '/assets/';
+	wp_enqueue_script( 'prettyPhoto', $wc_assets . 'js/prettyPhoto/jquery.prettyPhoto.min.js', array( 'jquery' ), '3.1.6', true );
+	wp_enqueue_script( 'prettyPhoto-init', $wc_assets . 'js/prettyPhoto/jquery.prettyPhoto.init.min.js', array( 'jquery','prettyPhoto' ) );
+	wp_enqueue_style( 'woocommerce_prettyPhoto_css', $wc_assets . 'css/prettyPhoto.css' );
 
 	wp_enqueue_script( 'fastshop-navigation', FS_URL . '/js/navigation.min.js', array( 'jquery' ), '20120206', true );
 	wp_enqueue_script( 'fastshop-skip-link-focus-fix', FS_URL . '/js/skip-link-focus-fix.min.js', array(), '20130115', true );

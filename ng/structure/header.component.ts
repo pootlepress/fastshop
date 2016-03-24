@@ -6,14 +6,17 @@ import { Router, RouteParams } from 'angular2/router';
 
 @Component( {
 	selector: 'fs-header',
-	templateUrl: fastShopData.url + '/ng/structure/tpl/header.html',
+	templateUrl: fastshopData.url + '/ng/structure/tpl/header.html',
 	inputs: []
 } )
 export class HeaderComponent implements OnInit {
 	//constructor( private router : Router, private routeParams : RouteParams ) {}
-	siteUrl = fastShopData.siteUrl;
-	siteName = fastShopData.siteName;
-	tagline = fastShopData.tagline;
-	menu = fastShopData.menu;
+	siteUrl = fastshopData.siteUrl;
+	siteName = fastshopData.siteName;
+	tagline = fastshopData.tagline;
+	menu = fastshopData.menu;
 	ngOnInit() {}
+	search( term ) {
+		fastshopData.router.navigate( ['Search', { term: term }] );
+	}
 }

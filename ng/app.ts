@@ -9,6 +9,7 @@ import { RouteConfig, Router, ROUTER_DIRECTIVES, RouteParams, ROUTER_PROVIDERS }
 import { ProductsComponent } from './products.component.ts';
 import { ProductComponent } from './product.component.ts';
 import { SingleComponent }  from './single.component.ts';
+import { BlogComponent } from "./blog.component.ts";
 
 import { HeaderComponent }  from './structure/header.component.ts';
 import { SidebarComponent } from './structure/sidebar.component.ts';
@@ -17,42 +18,86 @@ import { FooterComponent }  from './structure/footer.component.ts';
 import { WPAPI_Service } from "./wpapi.service.ts";
 import {OnInit} from "angular2/core";
 
-//enableProdMode();
-// Add the component meta data
+enableProdMode();
 
 var fastshopRoutes = [
 	{
-		path: fastShopData.routes.product + '/:slug',
+		path: fastshopData.routes.product + '/:slug',
 		name: 'Product',
 		component: ProductComponent,
 	},
 	{
-		path: fastShopData.routes.productCat + '/:cat',
+		path: fastshopData.routes.cat + '/:cat',
+		name: 'Category',
+		component: BlogComponent
+	},
+	{
+		path: fastshopData.routes.cat + '/:parentCat/:cat',
+		name: 'Category',
+		component: BlogComponent
+	},
+	{
+		path: fastshopData.routes.cat + '/:grandParentCat/:parentCat/:cat',
+		name: 'Category',
+		component: BlogComponent
+	},
+	{
+		path: fastshopData.routes.tag + '/:tag',
+		name: 'Tag',
+		component: BlogComponent
+	},
+	{
+		path: fastshopData.routes.productCat + '/:cat',
+		name: 'Product Category',
+		component: ProductsComponent
+	},
+	// For sub categories
+	{
+		path: fastshopData.routes.productCat + '/:parentCat/:cat',
+		name: 'Product Category',
+		component: ProductsComponent
+	},
+	// For sub categories
+	{
+		path: fastshopData.routes.productCat + '/:grandParentCat/:parentCat/:cat',
 		name: 'Product Category',
 		component: ProductsComponent
 	},
 	{
-		path: fastShopData.routes.productCat + '/:parentCat/:cat',
-		name: 'Product Category',
-		component: ProductsComponent
-	},
-	{
-		path: fastShopData.routes.productCat + '/:grandParentCat/:parentCat/:cat',
-		name: 'Product Category',
-		component: ProductsComponent
-	},
-	{
-		path: fastShopData.routes.productTag + '/:tag',
+		path: fastshopData.routes.productTag + '/:tag',
 		name: 'Product Tag',
 		component: ProductsComponent
 	},
 	{
-		path: fastShopData.routes.shop,
+		path: fastshopData.routes.shop + '/:term',
+		name: 'Search',
+		component: ProductsComponent
+	},
+	{
+		path: fastshopData.routes.shop,
 		name: 'Shop',
 		component: ProductsComponent,
 	},
 	{
 		path: '/:slug',
+		name: 'Single',
+		component: SingleComponent,
+	},
+	// For hierarchical post types
+	{
+		path: '/:parentSlug/:slug',
+		name: 'Single',
+		component: SingleComponent,
+	},
+	// For hierarchical post types
+	{
+		path: '/:grandParentSlug/:parentSlug/:slug',
+		name: 'Single',
+		component: SingleComponent,
+	},
+	// For hierarchical post types
+	{
+		path: '/:gr8GrandParentSlug/:grandParentSlug/:parentSlug/:slug',
 		name: 'Single',
 		component: SingleComponent,
 	}
@@ -85,19 +130,19 @@ export class AppComponent implements OnInit {
 	preloaded : string = '';
 	router;
 	constructor( private el:ElementRef, router : Router ) {
-		fastShopData.router = this.router = router;
+		fastshopData.router = this.router = router;
 	}
 
 	ngOnInit() {
-		console.log( jQuery( this.el.nativeElement ).length );
-		jQuery( this.el.nativeElement ).delegate( 'a[href^="' + fastShopData.siteUrl + '"]', "click", function ( e ) {
+		fastshopData.appElement = this.el.nativeElement;
+
+		jQuery( fastshopData.appElement ).on( 'click', 'a[href^="' + fastshopData.siteUrl + '"]', function ( e ) {
 			var $t = jQuery( this ),
 			    route = $t.attr( 'href' );
-			if ( -1 == route.indexOf( fastShopData.siteUrl + '/wp-' ) ) {
+			if ( -1 == route.indexOf( fastshopData.siteUrl + '/wp-' ) ) {
 				e.preventDefault();
-				route = route.replace( fastShopData.siteUrl, '' );
-				console.log( route );
-				fastShopData.router.navigateByUrl( route );
+				route = route.replace( fastshopData.siteUrl, '' );
+				fastshopData.router.navigateByUrl( route );
 			}
 		} );
 	}

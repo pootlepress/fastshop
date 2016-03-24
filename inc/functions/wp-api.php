@@ -53,7 +53,10 @@ class Fastshop_Wp_API {
 	 * @return null|string Post data
 	 */
 	public function api_posts() {
-		return $this->get_posts();
+		return $this->get_posts( array(
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		) );
 	}
 
 	/**
@@ -61,19 +64,24 @@ class Fastshop_Wp_API {
 	 * @return null|string Post data
 	 */
 	public function api_products() {
-		return $this->get_products( array(
-			'post_type'  => 'product',
-			'meta_query' => array(
+		return $this->get_products(
+			array_merge(
 				array(
-					'key'     => '_visibility',
-					'value'   => array(
-						'visible',
-						'catalog',
-					),
-					'compare' => 'IN'
-				)
+					'post_type'  => 'product',
+					'meta_query' => array(
+						array(
+							'key'     => '_visibility',
+							'value'   => array(
+								'visible',
+								'catalog',
+							),
+							'compare' => 'IN'
+						)
+					)
+				),
+				WC()->query->get_catalog_ordering_args()
 			)
-		) );
+		);
 	}
 
 	/**
@@ -107,15 +115,25 @@ class Fastshop_Wp_API {
 
 		$wp_query = new WP_Query( $this->get_args( $args ) );
 
-		if ( ! $wp_query->have_posts() ) {
-			echo '<h1>404 - Page Not Found!</h1>';
-		}
+		$posts_per_page = $wp_query->get( 'posts_per_page' );
+		$total_posts    = $wp_query->found_posts;
 
-		get_template_part( 'loop' );
-		$return = ob_get_contents();
+		if ( $wp_query->posts ) {
+			$json = array();
+			$json['ID']    = $wp_query->posts[0]->ID;
+			$json['post_type']    = $wp_query->posts[0]->post_type;
+			$json['paged'] = max( 1, $wp_query->get( 'paged' ) );
+			$json['total_pages'] = ceil( $total_posts / $posts_per_page );
+
+			if ( ! $wp_query->have_posts() ) {
+				echo '<h1>404 - Page Not Found!</h1>';
+			}
+			get_template_part( 'loop' );
+			$json['html'] = ob_get_contents();
+		}
 		ob_end_clean();
 
-		return $return;
+		return json_encode( $json );
 	}
 
 	/**
@@ -126,16 +144,19 @@ class Fastshop_Wp_API {
 	 * @return null|string Post data
 	 */
 	public function get_products( $args = array() ) {
-		$query = new WP_Query( $this->get_args( $args ) );
+		global $wp_query;
+		$wp_query = new WP_Query( $this->get_args( $args ) );
 
-		$products_json = array();
+		$json = array();
 
-		if ( ! $query->have_posts() ) {
+		if ( ! $wp_query->have_posts() ) {
 			return null;
 		}
 
-		while ( $query->have_posts() ) {
-			$query->the_post();
+		$this->shop_top( $json );
+
+		while ( $wp_query->have_posts() ) {
+			$wp_query->the_post();
 			global $post;
 			$id              = get_the_ID();
 			$product         = new WC_Product( $id );
@@ -151,11 +172,11 @@ class Fastshop_Wp_API {
 				'price'        => strip_tags( wc_price( $product->get_display_price() ) ),
 				'ID'           => $id,
 			);
-			$products_json[] = $product_json;
+			$json['products'][] = $product_json;
 		}
 		wp_reset_postdata();
 
-		return json_encode( $products_json );
+		return json_encode( $json );
 	}
 
 	/**
@@ -166,16 +187,17 @@ class Fastshop_Wp_API {
 	 * @return null|string Post data
 	 */
 	public function get_product( $args = array() ) {
-		$query = new WP_Query( $this->get_args( $args ) );
+		global $wp_query;
+		$wp_query = new WP_Query( $this->get_args( $args ) );
 
 		$json = array();
 
-		if ( ! $query->have_posts() ) {
+		if ( ! $wp_query->have_posts() ) {
 			return null;
 		}
 
-		while ( $query->have_posts() ) {
-			$query->the_post();
+		while ( $wp_query->have_posts() ) {
+			$wp_query->the_post();
 			global $product, $post;
 			$product = wc_get_product( get_the_ID() );
 			$sale    = __( 'Sale!', 'woocommerce' );
@@ -341,6 +363,33 @@ class Fastshop_Wp_API {
 		ob_end_clean();
 
 		return $this->min_html( $return );
+	}
+
+	/**
+	 * @param array $json
+	 */
+	public function shop_top( &$json ) {
+		global $wp_query;
+
+		if ( 1 === $wp_query->found_posts ) {
+			return;
+		}
+
+		$json['paged']    = max( 1, $wp_query->get( 'paged' ) );
+		$per_page = $wp_query->get( 'posts_per_page' );
+		$total    = $wp_query->found_posts;
+		$json['total_pages'] = ceil( $total / $per_page );
+		$first    = ( $per_page * $json['paged'] ) - $per_page + 1;
+		$last     = min( $total, $wp_query->get( 'posts_per_page' ) * $json['paged'] );
+
+		if ( 1 === $total ) {
+			$json['result_count'] = __( 'Showing the single result', 'woocommerce' );
+		} elseif ( $total <= $per_page || -1 === $per_page ) {
+			$json['result_count'] = sprintf( __( 'Showing all %d results', 'woocommerce' ), $total );
+		} else {
+			$json['result_count'] = sprintf( _x( 'Showing %1$d&ndash;%2$d of %3$d results', '%1$d = first, %2$d = last, %3$d = total', 'woocommerce' ), $first, $last, $total );
+		}
+
 	}
 
 	public function min_html( $html ) {

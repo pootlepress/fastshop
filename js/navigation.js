@@ -1,46 +1,46 @@
 /**
  * navigation.js
  *
- * Handles toggling the navigation menu for small screens and adds a focus class to parent li's for accessibility.
+ * Handles toggling the navigation $menu for small screens and adds a focus class to parent li's for accessibility.
  */
 ( function( $ ) {
-	var container, button, menu;
+	var $container, $button, $menu;
 
-	container = document.getElementById( 'site-navigation' );
-	if ( ! container ) {
+	$container = $( '#site-navigation' );
+	if ( ! $container ) {
 		return;
 	}
 
-	button = container.getElementsByTagName( 'button' )[0];
-	if ( 'undefined' === typeof button ) {
+	$button = $container.find( '.menu-toggle' );
+	if ( ! $button.length ) {
 		return;
 	}
 
-	menu = container.getElementsByTagName( 'ul' )[0];
+	$menu = $container.find( 'ul.menu' );
 
-	// Hide menu toggle button if menu is empty and return early.
-	if ( 'undefined' === typeof menu ) {
-		button.style.display = 'none';
+	// Hide $menu toggle $button if $menu is empty and return early.
+	if ( ! $menu.length ) {
+		$button.css( 'display', 'none' );
 		return;
 	}
 
-	menu.setAttribute( 'aria-expanded', 'false' );
+	$menu.attr( 'aria-expanded', 'false' );
 
-	if ( -1 === menu.className.indexOf( 'nav-menu' ) ) {
-		menu.className += ' nav-menu';
+	if ( ! $menu.hasClass( 'nav-menu' ) ) {
+		$menu.addClass( ' nav-menu' );
 	}
 
-	button.onclick = function() {
-		if ( -1 !== container.className.indexOf( 'toggled' ) ) {
-			container.className = container.className.replace( ' toggled', '' );
-			button.setAttribute( 'aria-expanded', 'false' );
-			menu.setAttribute( 'aria-expanded', 'false' );
+	$button.click( function() {
+		if ( $container.hasClass( 'toggled' ) ) {
+			$container.removeClass( 'toggled' );
+			$button.attr( 'aria-expanded', 'false' );
+			$menu.attr( 'aria-expanded', 'false' );
 		} else {
-			container.className += ' toggled';
-			button.setAttribute( 'aria-expanded', 'true' );
-			menu.setAttribute( 'aria-expanded', 'true' );
+			$container.addClass( 'toggled' );
+			$button.attr( 'aria-expanded', 'true' );
+			$menu.attr( 'aria-expanded', 'true' );
 		}
-	};
+	} );
 
 	// Add focus class to li
 	$( '.main-navigation, .secondary-navigation' ).find( 'a' ).on( 'focus.fastshop blur.fastshop', function() {
@@ -57,11 +57,11 @@
 	$( 'fastshop' ).delegate( "a", "click", function ( e ) {
 		var $t = $( this ),
 			route = $t.attr( 'href' );
-		console.log( route.indexOf( fastShopData.siteUrl ) );
-		if ( -1 !== route.indexOf( fastShopData.siteUrl ) ) {
+		console.log( route.indexOf( fastshopData.siteUrl ) );
+		if ( -1 !== route.indexOf( fastshopData.siteUrl ) ) {
 			e.preventDefault();
-			route = route.replace( fastShopData.siteUrl );
-			fastShopData.router.navigateByUrl( route );
+			route = route.replace( fastshopData.siteUrl );
+			fastshopData.router.navigateByUrl( route );
 		}
 		e.preventDefault();
 	} );

@@ -1,15 +1,17 @@
 <header id="masthead" class="site-header" role="banner">
 	<div class="col-full">
-
 		<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
 		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 		<div class="site-branding">
 			<h1 class="site-title"><a [attr.href]="siteUrl" rel="home">{{siteName}}</a></h1>
 			<p class="site-description">{{tagline}}</p>
 		</div>
+		<div class="site-search">
+			<input (input)="search( $event.target.value )" placeholder="Search" type="search">
+		</div>
 		<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
-			<div class="menu" [innerHTML]="menu"></div>
-
+			<span class="menu-toggle"></span>
+			<div *ngIf="menu" class="menu" [innerHTML]="menu"></div>
 		</nav><!-- #site-navigation -->
 	</div><!-- .col-full -->
 </header><!-- #masthead -->

@@ -22,11 +22,11 @@
 				<ins><span [innerHTML]="product.price" class="amount"></span></ins>
 			</p>
 		</div>
-		<div itemprop="description" [innerHTML]="product.content"></div>
+		<div itemprop="description" *ngIf="product.content" [innerHTML]="product.content"></div>
 
-		<div [innerHTML]="product.cartForm"></div>
+		<div *ngIf="product.cartForm" [innerHTML]="product.cartForm"></div>
 
-		<div class="product_meta" [innerHTML]="product.meta"></div>
+		<div *ngIf="product.meta" class="product_meta" [innerHTML]="product.meta"></div>
 	</div><!-- .summary -->
 
 	<div *ngIf="product.related" class="related products">

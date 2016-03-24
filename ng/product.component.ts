@@ -8,7 +8,7 @@ import {ProductsComponent} from "./products.component.ts";
 
 @Component({
 	selector: 'fs-product',
-	templateUrl: fastShopData.url + '/ng/tpl/product.html',
+	templateUrl: fastshopData.url + '/ng/tpl/product.html',
 	directives: [ ProductsComponent ],
 })
 export class ProductComponent implements OnInit {
@@ -35,15 +35,25 @@ export class ProductComponent implements OnInit {
 
 	ngOnInit() {
 		this.wpApi.api( 'product?name=' + this.routeParams.params.slug )
-			.success( res => this.product = JSON.parse( res ) );
-
+			.success( res => {
+				this.product = JSON.parse( res );
+				setTimeout( function () {
+					console.log( '.zoom,[data-rel^="prettyPhoto"] Length ' + jQuery( '.zoom,[data-rel^="prettyPhoto"]' ).length );
+					jQuery( '.zoom, [data-rel^="prettyPhoto"]' ).prettyPhoto( {
+						hook: 'data-rel',
+						social_tools: false,
+						theme: 'pp_woocommerce',
+						horizontal_padding: 20,
+						opacity: 0.8,
+						deeplinking: false
+					} );
+				}, 500 );
+				fastshopData.adminbar( this.product.ID, 'Product' );
+			} );
 	}
 
 	takeToShop() {
-		console.log( 'Router' );
-		console.log( jQuery.extend( true, {}, fastShopData.router ) );
-		console.log( 'Navigating to /shop' );
-		fastShopData.router.navigateByUrl( '/shop' );
+		fastshopData.router.navigateByUrl( '/shop' );
 	}
 	routerOnDeactivate () {
 		jQuery( 'body' )
@@ -54,6 +64,7 @@ export class ProductComponent implements OnInit {
 			this.product = fastshopPreloaded;
 			fastshopPreloaded = null;
 		}
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 		jQuery( 'body' )
 			.addClass( 'single-product single' )
 			.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );

@@ -8,7 +8,7 @@ import {BlogComponent} from "./blog.component.ts";
 
 @Component({
 	selector: 'fs-single',
-	templateUrl: fastShopData.url + '/ng/tpl/single.html',
+	templateUrl: fastshopData.url + '/ng/tpl/single.html',
 	directives: [ BlogComponent ],
 })
 export class SingleComponent implements OnInit {
@@ -19,21 +19,32 @@ export class SingleComponent implements OnInit {
 
 	ngOnInit() {
 		// For homepage
-		var slug = '' == this.routeParams.params.slug ? fastShopData.home : this.routeParams.params.slug;
+		if ( '' == this.routeParams.params.slug ) {
+			var slug = fastshopData.home
+		} else {
+			var slug = this.routeParams.params.slug;
+		}
 		// For Blog
-		this.slug = slug.replace( fastShopData.blog, '' );
+		this.slug = slug.replace( fastshopData.blog, '' );
 
 		if ( this.slug ) {
 			this.wpApi.api( 'single?posts_per_page=1&name=' + this.slug )
-				.success( res => this.html = res );
+				.success( res => {
+					var json = JSON.parse( res );
+					this.ID = json.ID;
+					fastshopData.adminbar( json.ID, json.post_type );
+					this.html = json.html;
+				} );
 
 			jQuery( 'body' )
 				.addClass( 'single' )
 				.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
 		} else {
 			this.slug = 'blogComponent';
+			fastshopData.adminbar();
 		}
 	}
+
 	routerOnDeactivate () {
 		jQuery( 'body' )
 			.removeClass( 'single-product single' );
