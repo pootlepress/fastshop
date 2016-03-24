@@ -10,18 +10,18 @@
 		<?php
 		if ( is_single() ) {
 			fastshop_posted_on();
-			the_title( '<h1 class="entry-title" itemprop="name headline">', '</h1>' );
-		} else {
-			if ( 'post' == get_post_type() ) {
-				fastshop_posted_on();
-			}
-
-			the_title( sprintf( '<h1 class="entry-title" itemprop="name headline"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h1>' );
 		}
+		the_title( sprintf( '<h1 class="entry-title" itemprop="name headline"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h1>' );
 		?>
 	</header><!-- .entry-header -->
 	<aside class="entry-meta">
-		<?php if ( 'post' == get_post_type() ) : // Hide category and tag text for pages on Search ?>
+		<?php
+		if ( ! is_single() ) {
+			if ( 'post' == get_post_type() ) {
+				fastshop_posted_on();
+			}
+		}
+		if ( 'post' == get_post_type() ) : // Hide category and tag text for pages on Search ?>
 
 			<?php
 			/* translators: used between list items, there is a space after the comma */

@@ -1,3 +1,4 @@
+<div *ngIf="notices" [innerHTML]="notices"></div>
 <div *ngIf="product && product.ID" [attr.id]="'product-' + product.ID" [ngClass]="product.post_classes">
 	<span *ngIf="product.sale" class="onsale">Sale!</span>
 	<div class="images">

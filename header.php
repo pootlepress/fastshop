@@ -34,7 +34,12 @@
 		$home = '';
 		$blog = '';
 	}
+	ob_start();
+	wc_print_notices();
+	$notices = ob_get_contents();
+	ob_end_clean();
 	$fs_data = array(
+		'notices'  => $notices,
 		'url'      => FS_URL,
 		'home'     => $home,
 		'blog'     => $blog,

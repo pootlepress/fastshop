@@ -12,6 +12,7 @@ import {ProductsComponent} from "./products.component.ts";
 	directives: [ ProductsComponent ],
 })
 export class ProductComponent implements OnInit {
+	notices = '';
 	private product : SingleProduct = {
 		post_classes	: '',
 		slug			: '',
@@ -34,6 +35,8 @@ export class ProductComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.notices = fastshopData.notices;
+		fastshopData.notices = '';
 		this.wpApi.api( 'product?name=' + this.routeParams.params.slug )
 			.success( res => {
 				this.product = JSON.parse( res );

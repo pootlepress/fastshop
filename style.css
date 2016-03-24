@@ -531,6 +531,7 @@ body {
 	content: '\f002';
 	position: absolute;
 	top: 0;
+	left: 0;
 	color: #444;
 }
 
@@ -1513,6 +1514,7 @@ fieldset legend {
 		margin: 0 0 0 -1.6em;
 		padding-left: 0;
 		display: block;
+		overflow: visible;
 	}
 
 	.main-navigation ul li,
@@ -1981,6 +1983,7 @@ video {
 .pagination {
 	text-align: center;
 	margin-bottom: 1.6em;
+	clear: both;
 }
 
 .pagination .page-numbers,
@@ -2584,6 +2587,7 @@ fastshop {
 router-outlet + * {
 	display: block;
 	background: #fff;
+	position: relative;
 }
 
 router-outlet + *:after {
