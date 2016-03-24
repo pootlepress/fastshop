@@ -38,7 +38,6 @@ export class ProductComponent implements OnInit {
 			.success( res => {
 				this.product = JSON.parse( res );
 				setTimeout( function () {
-					console.log( '.zoom,[data-rel^="prettyPhoto"] Length ' + jQuery( '.zoom,[data-rel^="prettyPhoto"]' ).length );
 					jQuery( '.zoom, [data-rel^="prettyPhoto"]' ).prettyPhoto( {
 						hook: 'data-rel',
 						social_tools: false,
@@ -69,6 +68,22 @@ export class ProductComponent implements OnInit {
 			.addClass( 'single-product single' )
 			.removeClass( 'archive post-type-archive post-type-archive-product tax-product_cat tax-product_tag' );
 	}
+	openProduct( product ) {
+		fastshopData.router.navigateByUrl( '/product/' + product.slug );
+	}
+
+	productClasses( classes, i ) {
+		++ i;
+		switch ( i % 3 ) {
+			case 0:
+				classes += ' last';
+				break;
+			case 1:
+				classes += ' first';
+		}
+		return i + ' ' + i % 3 + classes;
+	}
+
 }
 
 interface SingleProduct {

@@ -31,11 +31,41 @@
 
 	<div *ngIf="product.related" class="related products">
 		<h2>Related Products</h2>
-		<fs-product-archive [qry_args]="'post__in=' + product.related.join(',') + '&posts_per_page=3'"></fs-product-archive>
+		<ul *ngIf="product.related && product.related[0].title" class="products">
+			<li *ngFor="#p of product.related; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
+				<a *ngIf="p.title" style="cursor: pointer;" (click)="openProduct(p)">
+					<img *ngIf="p.thumbnail" [attr.src]="p.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{p.title}} image"/>
+					<h3>{{p.title}}</h3>
+					<div [innerHTML]="p.rating"></div>
+					<div [innerHTML]="p.sale"></div>
+			<span class="price">
+				<del *ngIf="p.delPrice > p.price" ><span [innerHTML]="p.delPrice" class="amount"></span></del>
+				<ins><span [innerHTML]="p.price" class="amount"></span></ins>
+			</span>
+				</a>
+				<a *ngIf="p.title" rel="nofollow" href="?add-to-cart={{p.ID}}" data-quantity="1" [attr.data-product_id]="p.ID" data-product_sku=""
+				   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>
+			</li>
+		</ul>
 	</div><!-- .related.products -->
 
 	<div *ngIf="product.upsells" class="related products">
 		<h2>You may also like&hellip;</h2>
-		<fs-product-archive [qry_args]="'post__in=' + product.upsells.join(',') + '&posts_per_page=3'"></fs-product-archive>
+		<ul *ngIf="product.upsells && product.upsells[0].title" class="products">
+			<li *ngFor="#p of product.upsells; #pi = index" [ngClass]="productClasses( p.post_classes, pi )">
+				<a *ngIf="p.title" style="cursor: pointer;" (click)="openProduct(p)">
+					<img *ngIf="p.thumbnail" [attr.src]="p.thumbnail" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="{{p.title}} image"/>
+					<h3>{{p.title}}</h3>
+					<div [innerHTML]="p.rating"></div>
+					<div [innerHTML]="p.sale"></div>
+			<span class="price">
+				<del *ngIf="p.delPrice > p.price" ><span [innerHTML]="p.delPrice" class="amount"></span></del>
+				<ins><span [innerHTML]="p.price" class="amount"></span></ins>
+			</span>
+				</a>
+				<a *ngIf="p.title" rel="nofollow" href="?add-to-cart={{p.ID}}" data-quantity="1" [attr.data-product_id]="p.ID" data-product_sku=""
+				   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>
+			</li>
+		</ul>
 	</div><!-- .related.products -->
 </div>

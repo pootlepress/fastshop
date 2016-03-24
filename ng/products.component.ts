@@ -90,7 +90,6 @@ export class ProductsComponent implements OnInit {
 	}
 
 	openProduct( product ) {
-		fastshopPreloaded = product;
 		fastshopData.router.navigateByUrl( '/product/' + product.slug );
 	}
 
