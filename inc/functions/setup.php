@@ -94,7 +94,7 @@ function fastshop_scripts() {
 
 	wp_enqueue_script( 'fastshop-es6-shim', '//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.33.3/es6-shim.min.js' );
 	wp_enqueue_script( 'fastshop-system-polyfills', '//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.20/system-polyfills.js' );
-	wp_enqueue_script( 'fastshop-ie-shims', '//npmcdn.com/angular2@2.0.0-beta.11/es6/dev/src/testing/shims_for_IE.js' );
+	wp_enqueue_script( 'fastshop-ie-shims', '//unpkg.com/angular2@2.0.0-beta.11/es6/dev/src/testing/shims_for_IE.js' );
 
 	wp_enqueue_script( 'fastshop-ng-polyfills', '//cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.9/angular2-polyfills.min.js' );
 	wp_enqueue_script( 'fastshop-ng-system', '//code.angularjs.org/tools/system.js' );
